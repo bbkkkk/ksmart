@@ -1,0 +1,112 @@
+
+<title>jqGrid - Ace Admin</title>
+
+<link rel="stylesheet" href="../../assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="../../assets/css/datepicker.css" />
+<link rel="stylesheet" href="../../assets/css/ui.jqgrid.css" />
+
+<!-- ajax layout which only needs content area -->
+<div class="page-header">
+	<h1>
+		jqGrid <small> <i class="ace-icon fa fa-angle-double-right"></i> Dynamic tables and grids using jqGrid plugin
+		</small>
+	</h1>
+</div>
+<!-- /.page-header -->
+
+<div class="row">
+	<div class="col-xs-12">
+		<!-- PAGE CONTENT BEGINS -->
+		<!-- jqGrid table list4 -->
+		<table id="rowed3"></table>
+		<!-- jqGrid 分页 div gridPager -->
+		<div id="prowed3"></div>
+		<!-- PAGE CONTENT ENDS -->
+	</div>
+	<!-- /.col -->
+</div>
+<!-- /.row -->
+<script type="text/javascript">
+//任务状态格式化
+function enumStatus(cellvalue, options, rowObject) {
+    if (cellvalue == 10) {
+        return "新增";
+    }  else if (cellvalue == 20) {
+        return "执行中";
+    } else if (cellvalue == 30) {
+        return "执行成功";
+    } else if (cellvalue == 40) {
+        return "失败不重试";
+    } else if (cellvalue == 50) {
+        return "待审核";
+    }
+}
+function pageInit(){
+	  var lastsel;
+	  jQuery("#rowed3").jqGrid(
+	      {
+	    	  url:'../../mvc/test/page2',
+	        datatype : "json",
+	    	height:$(document).height() - $("#rowed3").offset().top -280,
+	    	width:$(document).width() - $("#rowed3").offset().left -10,
+			colNames:[ '系统编码','系统名称','系统状态','操作'],
+			colModel:[
+				
+				{name:'sysid',index:'sysid', width:100, sorttype:"text", editable: true},
+				{name:'sysname',index:'sysname',width:100, sorttype:"text", editable:true},
+				{name:'status',index:'status', width:40, editable: true,edittype:"select",editoptions:{value:"10:新申请;20:已经批准;30:启用;40:停用"},formatter:enumStatus},
+                {name: 'act', index: 'act', width: 40, sortable: false, align: "left"}
+			], 
+	        rowNum : 10,
+	        rowList : [ 10, 20, 30 ],
+	        pager : '#prowed3',
+	        sortname : 'id',
+	        viewrecords : true,
+	        sortorder : "desc",
+	        onSelectRow : function(id) {
+	          if (id && id !== lastsel) {
+	            jQuery('#rowed3').jqGrid('restoreRow', lastsel);
+	            jQuery('#rowed3').jqGrid('editRow', id, true);
+	            lastsel = id;
+	          }
+	        },
+			loadComplete : function() {
+				var table = this;
+				setTimeout(function(){
+					updatePagerIcons(table);
+					enableTooltips(table);
+				}, 0);},
+	        editurl :"/RowEditing",
+	        caption : "Using events example"
+	      });
+	}
+//replace icons with FontAwesome icons like above
+function updatePagerIcons(table) {
+	var replacement = 
+	{
+		'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+		'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+		'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+		'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+	};
+	$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+		var icon = $(this);
+		var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+		
+		if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+	})
+}
+var scripts = [null,"../../assets/js/date-time/bootstrap-datepicker.js","../../assets/js/jqGrid/jquery.jqGrid.src.js","../../assets/js/jqGrid/i18n/grid.locale-cn.js", null]
+	
+	$('.page-content-area').ace_ajax(
+			'loadScripts',
+			scripts,
+			function() {//开始
+
+
+					  pageInit();
+				
+						
+			
+			})//结束
+</script>

@@ -1,0 +1,249 @@
+.n-inline-block {
+	display: inline-block;
+}
+.n-validator input {
+	display: inline-block;
+}
+.n-validator select {
+	display: inline-block;
+}
+.n-validator textarea {
+	display: inline-block;
+}
+.msg-wrap {
+	display: inline-block;
+}
+.n-icon {
+	display: inline-block;
+}
+.n-msg {
+	display: inline-block;
+}
+.msg-box {
+	position: relative;
+}
+.msg-wrap {
+	white-space: nowrap; position: relative;
+}
+.msg-wrap {
+	vertical-align: top;
+}
+.n-icon {
+	vertical-align: top;
+}
+.n-msg {
+	vertical-align: top;
+}
+.n-arrow {
+	overflow: hidden; position: absolute;
+}
+.n-arrow b {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; left: 0px; top: 0px; line-height: 14px; overflow: hidden; font-family: serif; font-size: 12px; font-style: normal; font-weight: 400; position: absolute; _line-height: 15px;
+}
+.n-arrow i {
+	margin: 0px; padding: 0px; border: 0px currentColor; border-image: none; left: 0px; top: 0px; line-height: 14px; overflow: hidden; font-family: serif; font-size: 12px; font-style: normal; font-weight: 400; position: absolute; _line-height: 15px;
+}
+.n-arrow i {
+	text-shadow: none;
+}
+.n-icon {
+	width: 16px; height: 16px; overflow: hidden; background-repeat: no-repeat;
+}
+.n-msg {
+	line-height: 15px; font-family: simsun; font-size: 12px; margin-left: 2px; display: inline-block; _margin-top: 0;
+}
+.n-error {
+	color: rgb(204, 51, 51);
+}
+.n-ok {
+	color: rgb(51, 153, 0);
+}
+.n-tip {
+	color: rgb(128, 128, 128);
+}
+.n-loading {
+	color: rgb(128, 128, 128);
+}
+.n-error .n-icon {
+	background-position: 0px 0px;
+}
+.n-ok .n-icon {
+	background-position: -16px 0px;
+}
+.n-tip .n-icon {
+	background-position: -32px 0px;
+}
+.n-loading .n-icon {
+	background: url("images/loading.gif") no-repeat 0px !important;
+}
+.n-top {
+	outline: 0px; line-height: 0; vertical-align: top; display: inline-block;
+}
+.n-right {
+	outline: 0px; line-height: 0; vertical-align: top; display: inline-block;
+}
+.n-bottom {
+	outline: 0px; line-height: 0; vertical-align: top; display: inline-block;
+}
+.n-left {
+	outline: 0px; line-height: 0; vertical-align: top; display: inline-block;
+}
+.n-top .n-arrow {
+	left: 8px; width: 12px; height: 6px;
+}
+.n-bottom .n-arrow {
+	left: 8px; width: 12px; height: 6px;
+}
+.n-left .n-arrow {
+	top: 6px; width: 6px; height: 12px;
+}
+.n-right .n-arrow {
+	top: 6px; width: 6px; height: 12px;
+}
+.n-top {
+	vertical-align: top;
+}
+.n-top .msg-wrap {
+	margin-bottom: 6px;
+}
+.n-top .n-arrow {
+	bottom: -6px;
+}
+.n-top .n-arrow b {
+	top: -6px;
+}
+.n-top .n-arrow i {
+	top: -7px;
+}
+.n-bottom {
+	vertical-align: bottom;
+}
+.n-bottom .msg-wrap {
+	margin-top: 6px;
+}
+.n-bottom .n-arrow {
+	top: -6px;
+}
+.n-bottom .n-arrow b {
+	top: -1px;
+}
+.n-bottom .n-arrow i {
+	top: 0px;
+}
+.n-left .msg-wrap {
+	right: 100%; margin-right: 6px;
+}
+.n-left .n-arrow {
+	right: -6px;
+}
+.n-left .n-arrow b {
+	left: -6px;
+}
+.n-left .n-arrow i {
+	left: -7px;
+}
+.n-right .msg-wrap {
+	margin-left: 6px;
+}
+.n-right .n-arrow {
+	left: -6px;
+}
+.n-right .n-arrow b {
+	left: 1px;
+}
+.n-right .n-arrow i {
+	left: 2px;
+}
+.n-default .n-left {
+	margin-top: 5px;
+}
+.n-default .n-right {
+	margin-top: 5px;
+}
+.n-default .n-top .msg-wrap {
+	bottom: 100%;
+}
+.n-default .n-bottom .msg-wrap {
+	top: 100%;
+}
+.n-default .msg-wrap {
+	position: absolute; z-index: 1;
+}
+.n-default .msg-wrap .n-icon {
+	background-image: url("images/validator_default.png");
+}
+.n-default .n-tip .n-icon {
+	display: none;
+}
+.n-simple .msg-wrap {
+	position: absolute; z-index: 1;
+}
+.n-simple .msg-wrap .n-icon {
+	background-image: url("images/validator_simple.png");
+}
+.n-simple .n-top .msg-wrap {
+	bottom: 100%;
+}
+.n-simple .n-bottom .msg-wrap {
+	top: 100%;
+}
+.n-simple .n-left {
+	margin-top: 5px;
+}
+.n-simple .n-right {
+	margin-top: 5px;
+}
+.n-simple .n-bottom .msg-wrap {
+	margin-top: 3px;
+}
+.n-simple .n-tip .n-icon {
+	display: none;
+}
+.n-yellow .msg-wrap {
+	padding: 4px 6px; border-radius: 2px; border: 1px solid rgb(255, 187, 118); border-image: none; color: rgb(219, 124, 34); font-size: 12px; position: absolute; z-index: 1; box-shadow: 0px 1px 3px #ccc; background-color: rgb(255, 252, 239);
+}
+.n-yellow .msg-wrap .n-arrow b {
+	color: rgb(255, 187, 118); text-shadow: 0px 0px 2px #ccc;
+}
+.n-yellow .msg-wrap .n-arrow i {
+	color: rgb(255, 252, 239);
+}
+.n-yellow .msg-wrap .n-icon {
+	background-image: url("images/validator_simple.png");
+}
+.n-yellow .n-top .msg-wrap {
+	bottom: 100%;
+}
+.n-yellow .n-bottom .msg-wrap {
+	top: 100%;
+}
+.n-yellow .n-tip {
+	border-color: rgb(221, 221, 221); color: rgb(51, 51, 51); box-shadow: 0px 1px 3px #ccc; background-color: rgb(248, 253, 255);
+}
+.n-yellow .n-ok {
+	border-color: rgb(221, 221, 221); color: rgb(51, 51, 51); box-shadow: 0px 1px 3px #ccc; background-color: rgb(248, 253, 255);
+}
+.n-yellow .n-loading {
+	border-color: rgb(221, 221, 221); color: rgb(51, 51, 51); box-shadow: 0px 1px 3px #ccc; background-color: rgb(248, 253, 255);
+}
+.n-yellow .n-tip .n-arrow b {
+	color: rgb(221, 221, 221); text-shadow: 0px 0px 2px #ccc;
+}
+.n-yellow .n-ok .n-arrow b {
+	color: rgb(221, 221, 221); text-shadow: 0px 0px 2px #ccc;
+}
+.n-yellow .n-loading .n-arrow b {
+	color: rgb(221, 221, 221); text-shadow: 0px 0px 2px #ccc;
+}
+.n-yellow .n-tip .n-arrow i {
+	color: rgb(248, 253, 255);
+}
+.n-yellow .n-ok .n-arrow i {
+	color: rgb(248, 253, 255);
+}
+.n-yellow .n-loading .n-arrow i {
+	color: rgb(248, 253, 255);
+}
+.n-yellow .n-tip .n-icon {
+	display: none;
+}

@@ -1,0 +1,198 @@
+
+<title>jqGrid - Ace Admin</title>
+
+<link rel="stylesheet" href="../../assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="../../assets/css/datepicker.css" />
+<link rel="stylesheet" href="../../assets/css/ui.jqgrid.css" />
+
+<<style>
+<!--
+.autoScroll 
+{ 
+overflow:auto; 
+} 
+-->
+</style>
+<!-- /.page-header -->
+<div class="page-content">
+    <div class="seach-bar">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">应用</span>
+                    <input type="text" class="form-control form-cnd" style="height: 32px" placeholder="代码/应用名"
+                           id="keyWord">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-search" style="height: 32px" type="button"
+                                id="search_app_btn">
+                            <i class="icon-search"></i>搜索
+                        </button>
+                                            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+	<div class="row">
+		<div class="col-xs-12" id="table-div">
+			<table id="grid-table"></table>
+			<div id="grid-pager" style="margin-top: 10px; margin-bottom: 0px"></div>
+	</div>
+	</div>
+</div>
+<!-- /.row -->
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+	var scripts = [null,"../../assets/js/date-time/bootstrap-datepicker.js","../../assets/js/jqGrid/jquery.jqGrid.src.js","../../assets/js/jqGrid/i18n/grid.locale-cn.js", null]
+    
+    //初始化操作按钮
+    //initOpBtn(grid_selector, cl, op);	
+	
+/**************************************************************************************************************************************************************/
+	
+	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+	  //inline scripts related to this page
+
+	jQuery(function($) {
+		
+		var grid_selector = "#grid-table";
+		var pager_selector = "#grid-pager";
+		
+		//resize to fit page size
+		$(window).on('resize.jqGrid', function () {
+			$(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width() );
+	    })
+		//resize on sidebar collapse/expand
+		var parent_column = $(grid_selector).closest('[class*="col-"]');
+		$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+			if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+				//setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+				setTimeout(function() {
+					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+				}, 0);
+			}
+	    })
+	
+		jQuery(grid_selector).jqGrid({
+			subGrid : false,
+// 			data: grid_data,
+// 			datatype: "local",
+            datatype: "json", //将这里改为使用JSON数据   
+            url:'../../mvc/test/page2', //这是数据的请求地址  
+
+			height:$(document).height() - $("#table-div").offset().top -280,
+			colNames:[ '系统编码','系统名称','系统状态','操作'],
+			colModel:[
+				
+				{name:'sysid',index:'sysid', width:100, sorttype:"text", editable: true},
+				{name:'sysname',index:'sysname',width:100, sorttype:"text", editable:true},
+				{name:'status',index:'status', width:40, editable: true,edittype:"select",editoptions:{value:"10:新申请;20:已经批准;30:启用;40:停用"},formatter:enumStatus},
+                {name: 'act', index: 'act', width: 40, sortable: false, align: "left"}
+			], 
+	
+			viewrecords : true,
+			 rowTotal: 200,
+			rowNum:10,
+			rowList:[10,20,30],
+			pager : pager_selector,
+			altRows: true,
+			//toppager: true,
+			pagerpos:'center',
+			multiselect: true,
+			//multikey: "ctrlKey",
+	        multiboxonly: true,
+	
+			loadComplete : function() {
+				var table = this;
+				setTimeout(function(){
+					updatePagerIcons(table);
+					enableTooltips(table);
+				}, 0);
+              //  var ids = jQuery(grid_selector).jqGrid('getDataIDs');
+                var rows =jQuery(grid_selector).getDataIDs();
+                for (var i = 0; i < rows.length; i++) {
+                    // code here 
+                    var link="http://www.baidu.com";
+                    var edit = " ";
+                    edit = edit + "<div class='btn-group' style='position: absolute'>";
+                    edit = edit + "  <button type='button'  onclick=\"viewmodal.showEditPage('#grid'," + rows[i] + ");\" class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o lg'></i> Edit</button>";
+                    edit = edit + "  <button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
+                    edit = edit + "    <span class='caret'></span>";
+                    edit = edit + "    <span class='sr-only'>Toggle Dropdown</span>";
+                    edit = edit + "  </button>";
+                    edit = edit + "  <ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
+                    edit = edit + "    <li ><a href='#' onclick=\"alert(1)\"><i class='fa fa-upload sm'></i> Upload images</a></li>";
+                    edit = edit + "    <li class='divider'></li>";
+                    edit = edit + "    <li ><a href='#' onclick=\"alert(2)\"><i class='fa fa-search sm'></i> Preview web</a></li>";
+                    edit = edit + "    <li ><a href='#'><i class='fa fa-search sm'></i> Preview mobi</a></li>";
+                    edit = edit + "  </ul>";
+                    edit = edit + "</div>";
+                    jQuery(grid_selector).jqGrid('setRowData', rows[i], { act: edit });
+                };  
+			},
+	
+			editurl: "/dummy.html",//nothing is saved
+			caption: "系统列表"
+	
+
+		});
+		$(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+		
+		
+	
+
+		//switch element when editing inline
+		function aceSwitch( cellvalue, options, cell ) {
+			setTimeout(function(){
+				$(cell) .find('input[type=checkbox]')
+					.addClass('ace ace-switch ace-switch-5')
+					.after('<span class="lbl"></span>');
+			}, 0);
+		}
+		//enable datepicker
+
+		//任务状态格式化
+		function enumStatus(cellvalue, options, rowObject) {
+		    if (cellvalue == 10) {
+		        return "新增";
+		    }  else if (cellvalue == 20) {
+		        return "执行中";
+		    } else if (cellvalue == 30) {
+		        return "执行成功";
+		    } else if (cellvalue == 40) {
+		        return "失败不重试";
+		    } else if (cellvalue == 50) {
+		        return "待审核";
+		    }
+		}
+	
+		
+		//replace icons with FontAwesome icons like above
+		function updatePagerIcons(table) {
+			var replacement = 
+			{
+				'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+				'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+				'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+				'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+			};
+			$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+				var icon = $(this);
+				var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+				
+				if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+			})
+		}
+	
+		function enableTooltips(table) {
+			$('.navtable .ui-pg-button').tooltip({container:'body'});
+			$(table).find('.ui-pg-div').tooltip({container:'body'});
+		}
+	
+		$(document).one('ajaxloadstart.page', function(e) {
+			$(grid_selector).jqGrid('GridUnload');
+			$('.ui-jqdialog').remove();
+		});
+	});
+	});
+</script>

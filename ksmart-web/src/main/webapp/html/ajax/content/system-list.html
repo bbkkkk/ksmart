@@ -1,0 +1,407 @@
+
+<title>jqGrid - Ace Admin</title>
+
+<link rel="stylesheet" href="../../assets/css/jquery-ui.css" />
+<link rel="stylesheet" href="../../assets/css/datepicker.css" />
+<link rel="stylesheet" href="../../assets/css/ui.jqgrid.css" />
+
+<style>
+<!--
+.autoScroll 
+{ 
+overflow:auto; 
+} 
+-->
+</style>
+<!-- /.page-header -->
+<div class="page-content">
+	<div class="seach-bar">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="input-group">
+					<span class="input-group-addon">应用</span> <input type="text" class="form-control form-cnd" style="height: 32px" placeholder="代码/应用名" id="search_text"> <span class="input-group-btn">
+						<button class="btn btn-primary btn-search" style="height: 32px" type="button" id="btn_search">
+							<i class="icon-search"></i>搜索
+						</button>
+					</span>
+				</div>
+			</div>
+			<div class="btn-group" style="height: 32px">
+				<button id="btn_add" class="btn btn-success" style="margin-left: -2px; margin-right: 10px;height: 32px" type="button" >
+					<i class="icon-plus"></i>新建
+				</button>
+				<button id="btn_edit"  class="btn btn-success" style="margin-left: -2px;margin-right: 10px; height: 32px" type="button" >
+					<i class="icon-plus"></i>修改
+				</button>
+				<button id="btn_del"  class="btn btn-success" style="margin-left: -2px;margin-right: 10px; height: 32px" type="button" >
+					<i class="icon-plus"></i>删除
+				</button>
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#addApplyModal" style="margin-left: -2px; height: 32px">
+					<i class="icon-plus"></i>新建申请
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12" id="table-div">
+			<table id="grid-table"></table>
+			<div id="grid-pager" style="margin-top: 10px; margin-bottom: 0px"></div>
+	</div>
+	</div>
+	<!-- start -->
+	<div class="modal fade remove-data" id="addApplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h5 class="modal-title" id="myModalLabel">新建应用申请</h5>
+            </div>
+            <form class="form-horizontal" role="form" id="addApplyForm"
+                  data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">
+                            应用代码</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" id="systemCode" name="systemCode" placeholder="代码,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="form-name">变更原因</label>
+
+                        <div class="col-sm-9">
+                            <select type="text" id="reason" name="reason" class="col-xs-10 col-sm-7">
+                                <option value="0">原负责人离职</option>
+                                <option value="1">责任变更</option>
+                                <option value="2" >其他</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right">变更类型</label>
+
+                        <div class="col-sm-9">
+                            <select type="text" id="transferType" name="transferType" class="col-xs-10 col-sm-7">
+                                <option value="0">申请成为负责人</option>
+                                <option value="1">申请成为联系人</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="btn-add-apply">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div tabindex="-1" class="modal remove-data" id="appModal" role="dialog" aria-hidden="true" aria-labelledby="myModalLabel" style="display: none;" data-keyboard="false" data-backdrop="static"><div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+            <h4 class="modal-title">编辑应用</h4>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal" id="updateAppForm" data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
+                <input name="id" type="hidden" value="599666">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right required">代码</label>
+
+                    <div class="col-sm-9">
+                        <input name="code" class="col-xs-10&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;col-sm-7" id="form-code" type="text" readonly="true" placeholder="代码" value="creditfactory2" data-rule="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right required" for="form-name">应用名</label>
+
+                    <div class="col-sm-9">
+                        <input name="name" class="col-xs-10 col-sm-7" id="form-name" type="text" placeholder="应用名" value="creditfactory_test" data-rule="required">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Jone主键</label>
+
+                    <div class="col-sm-9">
+                        <input name="joneId" class="col-xs-10 col-sm-7" type="text" placeholder="Jone主键" value="11238" data-rule="digits">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right">Jone名称</label>
+
+                    <div class="col-sm-9">
+                        <input id ="joneName" name="joneName" class="col-xs-10 col-sm-7" type="text" placeholder="Jone名称" value="worker.absfactory.jd.com">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label no-padding-right" for="form-description">备注</label>
+
+                    <div class="col-sm-9">
+                        <input name="description" class="col-xs-10 col-sm-7" id="form-description" type="text" placeholder="备注" value="测试用">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" type="button" data-dismiss="modal">关闭</button>
+            <button class="btn btn-primary" id="btn-update-app" type="button">保存</button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+
+
+
+</div>
+<!-- end -->
+
+</div>
+<!-- /.row -->
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    var temp_param;
+	var scripts = [null,"../../assets/js/date-time/bootstrap-datepicker.js","../../assets/js/jqGrid/jquery.jqGrid.src.js","../../assets/js/jqGrid/i18n/grid.locale-cn.js", null];
+	
+	function edit(id){
+		 temp_param=id;
+       	$('#appModal').modal('show');
+       }
+/**
+* 按条件查询
+* @param cnd 条件
+* @param table   表格
+*/
+function findByCnd(cnd, table) {
+var grid=	$(table);	
+var postData = grid.jqGrid("getGridParam", "postData");
+$.extend(postData, cnd);
+
+grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
+   {page: 1}
+]);
+}
+/**************************************************************************************************************************************************************/
+        
+	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+	  //inline scripts related to this page
+
+	jQuery(function($) {
+		
+
+	
+        $('#appModal').on('show.bs.modal', function() {
+        	  var reqUrl = '../../mvc/test/show';
+        	var result=getRemoteData(reqUrl,{"id":111});
+        	
+        	
+        	
+        	
+	        $('#joneName').attr("value", result.joneName);
+
+         });
+
+       $("#btn-update-app").click(
+		function() {
+			if (isValid("updateAppForm")) {
+				  var reqUrl = '../../mvc/test/update';
+				postFormData(reqUrl, "updateAppForm", "appModal",
+						"确定保存应用信息？", "grid-table");
+			}
+		});
+	       //添加应用
+        $("#btn_search").click(function () {
+        	alert("search");
+        	var grid=	$(grid_selector);	
+        	  grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
+        	                                                                     {page: 2,rows:10,test:111,postData:{'test':'xxx22','sn':333}}
+        	                                                                 ]);
+        });	
+        //添加应用
+        $("#btn_add").click(function () {
+        	alert(1);
+        	
+    
+        });	
+		
+
+        $("#btn-add-apply").click(function () {
+            if (isValid("addApplyForm")) {
+                var reqUrl = '../../mvc/test/add';
+                postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加应用信息？", "grid-table")
+            }
+        });
+        
+   
+		var grid_selector = "#grid-table";
+		var pager_selector = "#grid-pager";
+		
+		//resize to fit page size
+		$(window).on('resize.jqGrid', function () {
+			$(grid_selector).jqGrid( 'setGridWidth', $(".page-content").width()-5 );
+	    })
+		//resize on sidebar collapse/expand
+		var parent_column = $(grid_selector).closest('[class*="col-"]');
+		$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {
+			if( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {
+				//setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+				setTimeout(function() {
+					$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );
+				}, 0);
+			}
+	    })
+		jQuery(grid_selector).jqGrid({
+			subGrid : false,
+// 			data: grid_data,
+// 			datatype: "local",
+            datatype: "json", //将这里改为使用JSON数据   
+            url:'../../mvc/test/page3', //这是数据的请求地址  
+
+			height:$(document).height() - $("#table-div").offset().top -280,
+			colNames:[ '系统编码','系统名称','系统状态','操作'],
+			colModel:[
+				
+				{name:'sysid',index:'sysid', width:100, sorttype:"text", editable: true},
+				{name:'sysname',index:'sysname',width:100, sorttype:"text", editable:true},
+				{name:'status',index:'status', width:40, editable: true,edittype:"select",editoptions:{value:"10:新申请;20:已经批准;30:启用;40:停用"},formatter:enumStatus},
+                {name: 'act', index: 'act', width: 40, sortable: false, align: "left"}
+			], 
+	
+			viewrecords : true,
+			 rowTotal: 200,
+			rowNum:10,
+			rowList:[10,20,30],
+			pager : pager_selector,
+			altRows: true,
+			//toppager: true,
+			pagerpos:'center',
+			multiselect: true,
+			//multikey: "ctrlKey",
+	        multiboxonly: true,
+	
+			loadComplete : function() {
+				var table = this;
+				setTimeout(function(){
+					updatePagerIcons(table);
+					enableTooltips(table);
+				}, 0);
+              //  var ids = jQuery(grid_selector).jqGrid('getDataIDs');
+                var ids =jQuery(grid_selector).getDataIDs();
+                for (var i = 0; i < ids.length; i++) {
+                    var rowId = ids[i];
+                  var sysid=  getRowData(rowId,grid_selector).sysid;
+                    // code here 
+                    var link="http://www.baidu.com";
+                    var edit = " ";
+                    edit = edit + "<div class='btn-group' style='position:absolute'>";
+                    edit = edit + "  <button type='button'  class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o lg'></i> 操作</button>";
+                    edit = edit + "  <button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
+                    edit = edit + "    <span class='caret'></span>";
+                    edit = edit + "    <span class='sr-only'>Toggle Dropdown</span>";
+                    edit = edit + "  </button>";
+                    edit = edit + "  <ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;position:relative;'>";
+                    edit = edit + "    <li ><a  href='#' onclick=\"edit('"+sysid+"')\"><i class='fa fa-upload sm'></i>修改</a></li>";
+                    edit = edit + "    <li class='divider'></li>";
+                    edit = edit + "    <li ><a href='#' onclick=\"alert(2)\"><i class='fa fa-search sm'></i> 详细</a></li>";
+                    edit = edit + "    <li ><a href='#'><i class='fa fa-search sm'></i> 删除</a></li>";
+                    edit = edit + "  </ul>";
+                    edit = edit + "</div>";
+//edit ='<div class="btn-group" style="position: absolute"><button class="btn btn-primary btn-xs" type="button">操作</button><button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown"><span class="caret"></span><span class="sr-only"></span></button><ul class="dropdown-menu pull-right" role="menu"><li><a class="remoteModal" id="deitapp_599666" role="button" href="#appModal" data-toggle="modal" remote-target="#appModal" remote-url="/jmq-web/system/599666.do"><i class="icon-edit"></i><span class="menu-span">编辑</span></a></li><li><a href="javascript:deleteApp(599666)"><i class="icon-trash"></i><span class="menu-span">删除</span></a></li><li class="divider"></li><li><a class="remoteModal" id="adduser_599666" role="button" href="#addSystemUserModal" data-toggle="modal" remote-target="#addSystemUserModal" remote-url="/jmq-web/system/findUser.do?systemId=599666"><i class="icon-user"></i><span class="menu-span">用户授权</span></a></li><li><a class="remoteModal" id="certificate_599666" role="button" href="#certificateModal" data-toggle="modal" remote-target="#certificateModal" remote-url="/jmq-web/system/getCertificate.do?app=creditfactory2"><i class="icon-lock"></i><span class="menu-span">获取连接凭证</span></a></li><li><a class="remoteModal" id="relate_599666" role="button" href="#relateModal" data-toggle="modal" remote-target="#relateModal" remote-url="/jmq-web/system/findJoneApp.do?systemId=599666"><i class="icon-plus"></i><span class="menu-span">关联Jone</span></a></li><li><a class="remoteModal" id="detail_599666" role="button" href="#systemDetailModal" data-toggle="modal" remote-target="#systemDetailModal" remote-url="/jmq-web/system/pubSub/599666/creditfactory2.do"><i class="icon-info"></i><span class="menu-span">详细信息</span></a></li></ul></div>';
+                    
+//  edit = edit +'<div class="btn-group" style="position: absolute">';
+//  edit = edit +'<button class="btn btn-primary btn-xs" type="button">操作</button>';
+//  edit = edit +'<button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">';
+//  edit = edit +'	<span class="caret"></span><span class="sr-only"></span>';
+//  edit = edit +'</button>';
+//  edit = edit +'<ul class="dropdown-menu pull-right" role="menu">';
+//  edit = edit +'	<li><a class="remoteModal" id="deitapp_599666" role="button" href="#appModal" data-toggle="modal" remote-target="#appModal" remote-url="/jmq-web/system/599666.do"><i class="icon-edit"></i><span class="menu-span">编辑</span></a></li>';
+//  edit = edit +'	<li class="divider"></li>';
+//  edit = edit +'	<li><a class="remoteModal" id="adduser_599666" role="button" href="#addSystemUserModal" data-toggle="modal" remote-target="#addSystemUserModal" remote-url="/jmq-web/system/findUser.do?systemId=599666"><i class="icon-user"></i><span class="menu-span">用户授权</span></a></li>';
+//  edit = edit +'</ul>';
+//  edit = edit +'</div>';
+                    
+                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { act: edit });
+                };  
+			},
+	
+			editurl: "/dummy.html",//nothing is saved
+			caption: "系统列表",
+				beforeRequest: function() {
+		            //alert($(grid_selector).getGridParam("url"));
+		           // alert($("#pagecurmaxnum").val());
+		          //  var newurl = "bookmarkList.do?pagecurmaxnum="+$("#pagecurmaxnum").val();
+					   var jqgrid=$(grid_selector);
+				          var sortname=jqgrid.getGridParam('sortname');
+				          var sortorder=jqgrid.getGridParam('sortorder');
+				          var search_text=$("#search_text").val();
+				          jqgrid.jqGrid("setGridParam", {postData:{search_text:search_text,sortname:sortname,sortorder:sortorder}});
+		        }
+
+		});
+		$(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+		
+		
+	
+
+		//switch element when editing inline
+		function aceSwitch( cellvalue, options, cell ) {
+			setTimeout(function(){
+				$(cell) .find('input[type=checkbox]')
+					.addClass('ace ace-switch ace-switch-5')
+					.after('<span class="lbl"></span>');
+			}, 0);
+		}
+		//enable datepicker
+
+		//任务状态格式化
+		function enumStatus(cellvalue, options, rowObject) {
+		    if (cellvalue == 10) {
+		        return "新增";
+		    }  else if (cellvalue == 20) {
+		        return "执行中";
+		    } else if (cellvalue == 30) {
+		        return "执行成功";
+		    } else if (cellvalue == 40) {
+		        return "失败不重试";
+		    } else if (cellvalue == 50) {
+		        return "待审核";
+		    }
+		}
+	
+		
+		//replace icons with FontAwesome icons like above
+		function updatePagerIcons(table) {
+			var replacement = 
+			{
+				'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',
+				'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',
+				'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',
+				'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'
+			};
+			$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){
+				var icon = $(this);
+				var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+				
+				if($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);
+			})
+		}
+	
+		function enableTooltips(table) {
+			$('.navtable .ui-pg-button').tooltip({container:'body'});
+			$(table).find('.ui-pg-div').tooltip({container:'body'});
+		}
+	
+		$(document).one('ajaxloadstart.page', function(e) {
+			$(grid_selector).jqGrid('GridUnload');
+			$('.ui-jqdialog').remove();
+		});
+	});
+	});
+</script>

@@ -1,0 +1,15 @@
+<div class="btn-group">
+	<button class="btn btn-default btn-xs" type="button">操作</button>
+	<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+		<span class="caret"></span><span class="sr-only"></span>
+	</button>
+	<ul class="dropdown-menu pull-right" role="menu">
+		<li><a class="remoteModal" id="deitapp_599666" role="button" href="#appModal" data-toggle="modal" remote-target="#appModal" remote-url="/jmq-web/system/599666.do"><i class="icon-edit"></i><span class="menu-span">编辑</span></a></li>
+		<li><a href="javascript:deleteApp(599666)"><i class="icon-trash"></i><span class="menu-span">删除</span></a></li>
+		<li class="divider"></li>
+		<li><a class="remoteModal" id="adduser_599666" role="button" href="#addSystemUserModal" data-toggle="modal" remote-target="#addSystemUserModal" remote-url="/jmq-web/system/findUser.do?systemId=599666"><i class="icon-user"></i><span class="menu-span">用户授权</span></a></li>
+		<li><a class="remoteModal" id="certificate_599666" role="button" href="#certificateModal" data-toggle="modal" remote-target="#certificateModal" remote-url="/jmq-web/system/getCertificate.do?app=creditfactory2"><i class="icon-lock"></i><span class="menu-span">获取连接凭证</span></a></li>
+		<li><a class="remoteModal" id="relate_599666" role="button" href="#relateModal" data-toggle="modal" remote-target="#relateModal" remote-url="/jmq-web/system/findJoneApp.do?systemId=599666"><i class="icon-plus"></i><span class="menu-span">关联Jone</span></a></li>
+		<li><a class="remoteModal" id="detail_599666" role="button" href="#systemDetailModal" data-toggle="modal" remote-target="#systemDetailModal" remote-url="/jmq-web/system/pubSub/599666/creditfactory2.do"><i class="icon-info"></i><span class="menu-span">详细信息</span></a></li>
+	</ul>
+</div>

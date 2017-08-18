@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/rabbit
+    http://www.springframework.org/schema/rabbit/spring-rabbit-1.4.xsd">
+
+
+    <!-- Rabbit MQ -->
+    <!-- 定义rabbitMQ的连接 -->
+    <rabbit:connection-factory id="connectionFactory" host="${rabbitmq.ip}" port="${rabbitmq.port}"
+                               virtual-host="${rabbitmq.virtual-host}" username="${rabbitmq.username}"
+                               password="${rabbitmq.password}" channel-cache-size="${rabbitmq.channel-cache-size}"/>
+
+    <!-- 定义一个管理连接 -->
+    <rabbit:admin connection-factory="connectionFactory" auto-startup="true"/>
+
+    <!-- queue: 定义会话服务队列 -->
+    <rabbit:queue id="edas.test.queue" name="edas.test.queue" auto-declare="true" durable="true"
+                  auto-delete="false" exclusive="false"/>
+
+    <!-- listener: 消息监听者 -->
+    <!--<bean id="userCreateListener" class="com.yryz.qstone.common.mq.MQUserCreateListener"></bean>-->
+
+    <!-- listener: 注册消息监听者 -->
+    <!--<rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="userCreateListener" queues="edas.test.queue"/>
+    </rabbit:listener-container>-->
+
+    <!-- exchange: 直连交换机 -->
+    <rabbit:direct-exchange name="yryz.user.direct"
+                            id="yryz.user.direct" auto-declare="true" durable="true">
+        <rabbit:bindings>
+            <rabbit:binding queue="edas.test.queue" key="edas.test.queue"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!-- template: rabbit发送至session模板信息类 -->
+    <rabbit:template id="directTemplate"
+                     connection-factory="connectionFactory"
+                     exchange="yryz.user.direct"
+                     reply-timeout="10000"/>
+
+    <!--&lt;!&ndash; 创建rabbitTemplate 消息模板类 &ndash;&gt;
+    <bean id="rabbitTemplate"
+          class="org.springframework.amqp.rabbit.core.RabbitTemplate">
+        <constructor-arg ref="connectionFactory"></constructor-arg>
+    </bean>-->
+
+</beans>

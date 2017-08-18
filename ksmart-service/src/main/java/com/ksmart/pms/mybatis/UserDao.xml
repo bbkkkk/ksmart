@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ksmart.pms.dao.UserDao">
+    <insert id="insert" parameterType="Map">
+        insert into smt_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uname != null">
+                uname,
+            </if>
+            <if test="pwd != null">
+                pwd,
+            </if>
+            <if test="real_name != null">
+                real_name,
+            </if>
+            <if test="cert_no != null">
+                cert_no,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="comment != null">
+                comment,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="uname != null">
+                #{uname},
+            </if>
+            <if test="pwd != null">
+                #{pwd},
+            </if>
+            <if test="real_name != null">
+                #{real_name},
+            </if>
+            <if test="cert_no != null">
+                #{cert_no},
+            </if>
+            <if test="birthday != null">
+                #{birthday},
+            </if>
+            <if test="sex != null">
+                #{sex},
+            </if>
+            <if test="comment != null">
+                #{comment},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="update">
+        update
+        smt_user
+        <trim prefix="set" suffixOverrides=",">
+            <if test="uname!=null">uname=#{uname},</if>
+            <if test="pwd!=null">pwd=#{pwd},</if>
+            <if test="real_name!=null">real_name=#{real_name},</if>
+            <if test="cert_no!=null">cert_no=#{cert_no},</if>
+            <if test="birthday!=null">birthday=#{birthday},</if>
+            <if test="sex!=null">sex=#{sex},</if>
+            <if test="comment!=null">comment=#{comment},</if>
+        </trim>
+        where id = #{id}
+    </update>
+    <select id="queryCount"  parameterType="Map" resultType="Integer">
+        select count(1) from smt_user t
+        <where>
+            <if test="params!=null and params.size()!=0">
+                <foreach collection="params" index="key" item="value" separator=" and ">
+                    ${key} like CONCAT('%',#{value},'%' )
+                </foreach>
+            </if>
+        </where>
+    </select>
+    <select id="queryPage" resultType="Map">
+        select * from smt_user
+        <where>
+            <if test="params!=null and params.size()!=0">
+                <foreach collection="params" index="key" item="value" separator=" and ">
+                    ${key} like CONCAT('%',#{value},'%' )
+                </foreach>
+            </if>
+        </where>
+        order by ${sortname} ${sortorder} limit #{limit_start},#{limit_end}
+    </select>
+</mapper>

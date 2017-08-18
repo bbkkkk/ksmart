@@ -1,0 +1,122 @@
+<title>jqGrid - Ace Admin</title>
+<link rel=\ "stylesheet\" href=\ "../../assets/css/jquery-ui.css\" />
+<link rel=\ "stylesheet\" href=\ "../../assets/css/datepicker.css\" />
+<link rel=\ "stylesheet\" href=\ "../../assets/css/ui.jqgrid.css\" />
+<style>
+\n<!-- \n.autoScroll {
+	overflow: auto;
+}
+\n--
+>
+\n
+</style>
+<!-- /.page-header -->
+<div class=\"page-content\">
+	\t
+	<div class=\"seach-bar\">
+		\t\t
+		<div class=\"row\">
+			\t\t\t
+			<div class=\"col-md-4\">
+				\t\t\t\t
+				<div class=\"input-group\">
+					\t\t\t\t\t<span class=\"input-group-addon\">应用</span> <input type=\ "text\" class=\ "form-control form-cnd\" style="" "height: 32px\" placeholder=\ "代码/应用名\" id=\"search_text\"> <span class=\"input-group-btn\">\t\t\t\t\t\t
+						<button class=\ "btn btn-primary btn-search\" style="" "height: 32px\" type=\ "button\" id=\"btn_search\">
+							\t\t\t\t\t\t\t<i class=\"icon-search\"></i>搜索\t\t\t\t\t\t
+						</button>\t\t\t\t\t
+					</span>\t\t\t\t
+				</div>
+				\t\t\t
+			</div>
+			\t\t\t
+			<div class=\ "btn-group\" style="""height: 32px\">
+				\t\t\t
+				<!-- \t\t\t\t<button id=\"btn_add\" class=\"btn btn-success\" style=\"margin-left: -2px; margin-right: 10px;height: 32px\" type=\"button\" >\t\t\t\t\t<i class=\"icon-plus\"></i>新建\t\t\t\t</button>\t\t\t\t<button id=\"btn_edit\"  class=\"btn btn-success\" style=\"margin-left: -2px;margin-right: 10px; height: 32px\" type=\"button\" >\t\t\t\t\t<i class=\"icon-plus\"></i>修改\t\t\t\t</button>\t\t\t\t<button id=\"btn_del\"  class=\"btn btn-success\" style=\"margin-left: -2px;margin-right: 10px; height: 32px\" type=\"button\" >\t\t\t\t\t<i class=\"icon-plus\"></i>删除\t\t\t\t</button> -->
+				\t\t\t\t
+				<button type=\ "button\" class=\ "btn btn-success\" data-toggle=\ "modal\" data-target=\ "#addApplyModal\" style="""margin-left: -2px; height: 32px\">
+					\t\t\t\t\t<i class=\"icon-plus\"></i>新建应用\t\t\t\t
+				</button>
+				\t\t\t
+			</div>
+			\t\t
+		</div>
+		\t
+	</div>
+	\t
+	<div class=\"row\">
+		\t\t
+		<div class=\ "col-xs-12\" id=\"table-div\">
+			\t\t\t
+			<table id=\"grid-table\"></table>
+			\t\t\t
+			<div id=\ "grid-pager\" style="""margin-top: 10px; margin-bottom: 0px\"></div>
+			\t
+		</div>
+		\t
+	</div>
+	\t
+	<!-- start -->
+	\t
+	<div class=\ "modal fade remove-data\" id=\ "addApplyModal\" tabindex=\ "-1\" role=\ "dialog\" aria-labelledby=\ "myModalLabel\"     aria-hidden=\ "true\" data-backdrop=\ "static\" data-keyboard=\"false\">
+		<div class=\"modal-dialog\">
+			<div class=\"modal-content\">
+				<div class=\"modal-header\">
+					<button type=\ "button\" class=\ "close\" data-dismiss=\"modal\">
+						<span aria-hidden=\"true\">&times;</span><span class=\"sr-only\">Close</span>
+					</button>
+					<h5 class=\ "modal-title\" id=\"myModalLabel\">新建应用申请</h5>
+				</div>
+				<form class=\ "form-horizontal\" role=\ "form\" id=\ "addApplyForm\"                  data-validator-option=\"{theme:'yellow_right_effect',stopOnError:true}\">
+					<div class=\"modal-body\">
+						<div class=\"form-group\">
+							<label class=\ "col-sm-3 control-labelno-padding-right\"> 应用编码</label>
+							<div class=\"col-sm-9\">
+								<input type=\ "text\"  name=\ "sysid\" placeholder=\ "编码,必填\" class=\ "col-xs-10\t\t\t\t\t\t\t\tcol-sm-7\" data-rule=\ "required\"/>
+							</div>
+						</div>
+						<div class=\"form-group\">
+							<label class=\ "col-sm-3 control-labelno-padding-right\"> 应用名称</label>
+							<div class=\"col-sm-9\">
+								<input type=\ "text\" name=\ "sysname\" placeholder=\ "名称,必填\" class=\ "col-xs-10\t\t\t\t\t\t\t\tcol-sm-7\" data-rule=\ "required\"/>
+							</div>
+						</div>
+					</div>
+					<div class=\"modal-footer\">
+						<button type=\ "button\" class=\ "btn btn-default\" data-dismiss=\"modal\">取消</button>
+						<button type=\ "button\" class=\ "btn btn-primary\" id=\"btn-add-apply\">保存</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div tabindex=\ "-1\" class=\ "modal remove-data\" id=\ "updateAppModal\" role=\ "dialog\" aria-hidden=\ "true\" aria-labelledby=\ "myModalLabel\" style="" "display: none;\" data-keyboard=\ "false\" data-backdrop=\"static\">
+		<div class=\"modal-dialog\">
+			<div class=\"modal-content\">
+				<div class=\"modal-header\">
+					<button class=\ "close\" aria-hidden=\ "true\" type=\ "button\" data-dismiss=\"modal\">×</button>
+					<h4 class=\"modal-title\">编辑应用</h4>
+				</div>
+				<div class=\"modal-body\">
+					<form class=\ "form-horizontal\" id=\ "updateAppForm\" data-validator-option=\"{theme:'yellow_right_effect',stopOnError:true}\">
+						<input name=\ "sysid\" type=\ "hidden\" value=\"\">
+						<div class=\"form-group\">
+							<label class=\ "col-sm-3 control-label no-padding-right required\" for=\"form-name\">应用名</label>
+							<div class=\"col-sm-9\">
+								<input name=\ "sysname\" class=\ "col-xs-10 col-sm-7\"  type=\ "text\" placeholder=\ "应用名\" value=\ "\" data-rule=\"required\">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class=\"modal-footer\">
+					<button class=\ "btn btn-default\" type=\ "button\" data-dismiss=\"modal\">关闭</button>
+					<button class=\ "btn btn-primary\" id=\ "btn-update-app\" type=\"button\">保存</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+	</div>
+	<!-- end -->
+</div>
+<!-- /.row -->
+<!-- page specific plugin scripts -->
+<script type=\"text/javascript\">    var temp_sysid;\tvar scripts = [null,\"../../assets/js/date-time/bootstrap-datepicker.js\",\"../../assets/js/jqGrid/jquery.jqGrid.src.js\",\"../../assets/js/jqGrid/i18n/grid.locale-cn.js\", null];\t\tfunction edit(id){\t\ttemp_sysid=id;\t\t//$(\"#updateAppForm [name='sysname']\").val('');       \t$('#updateAppModal').modal('show');       }\t\tfunction startwarn(sysid){\t\t  var reqUrl = '../../mvc/erp/system/startstop';\t       getRemoteData(reqUrl,{sysid:sysid,status:30});\t       $(\"#grid-table\").jqGrid().trigger(\"reloadGrid\");       }\t\tfunction stopwarn(sysid){\t\t  var reqUrl = '../../mvc/erp/system/startstop';\t       getRemoteData(reqUrl,{sysid:sysid,status:40});\t       $(\"#grid-table\").jqGrid().trigger(\"reloadGrid\");     }\t/*** 按条件查询* @param cnd 条件* @param table   表格*/function findByCnd(cnd, table) {var grid=\t$(table);\tvar postData = grid.jqGrid(\"getGridParam\", \"postData\");$.extend(postData, cnd);grid.jqGrid(\"setGridParam\", {search: true}).trigger(\"reloadGrid\", [   {page: 1}]);}/**************************************************************************************************************************************************************/        \t$('.page-content-area').ace_ajax('loadScripts', scripts, function() {\t  //inline scripts related to this page\tjQuery(function($) {\t\t\t\t$.jgrid.ajaxOptions.type = 'post';\t        $('#updateAppModal').on('shown.bs.modal', function() {        \t  var reqUrl = '../../mvc/erp/system/show';        \t  var result=getRemoteData(reqUrl,{\"sysid\":temp_sysid});        \t//  alert(result);        \t$(\"#updateAppForm [name='sysid']\").val(temp_sysid);        \t        \t//alert($(\"#updateAppForm [name='sysname']\").val());\t        $(\"#updateAppForm [name='sysname']\").val(result.sysname);         });       $(\"#btn-update-app\").click(\t\tfunction() {\t\t\tif (isValid(\"updateAppForm\")) {\t\t\t\t  var reqUrl = '../../mvc/erp/system/update';\t\t\t\tpostFormData(reqUrl, \"updateAppForm\", \"updateAppModal\",\t\t\t\t\t\t\"确定保存应用信息？\", \"grid-table\");\t\t\t}\t\t});\t       //添加应用        $(\"#btn_search\").click(function () {        \tvar grid=\t$(grid_selector);        \t  grid.jqGrid(\"setGridParam\", {search: true}).trigger(\"reloadGrid\", [        \t                                                                     {page: 1}        \t                                                                     ]);        });\t        //添加应用        $(\"#btn_add\").click(function () {        \talert(1);        \t            });\t\t\t        $('#addApplyModal').on('shown.bs.modal', function() {       \t $(\"#addApplyForm\")[0].reset();        });                $(\"#btn-add-apply\").click(function () {            if (isValid(\"addApplyForm\")) {                var reqUrl = '../../mvc/erp/system/checksysid';                                var sysid=$(\"#addApplyForm [name='sysid']\").val();                var result=getRemoteData(reqUrl,{\"sysid\":sysid});            \t                if(result.statusCode==300){                \treturn;                }            \t                reqUrl = '../../mvc/erp/system/add';                postFormData(reqUrl, \"addApplyForm\", \"addApplyModal\", \"确定添加应用信息？\", \"grid-table\")            }        });           \t\tvar grid_selector = \"#grid-table\";\t\tvar pager_selector = \"#grid-pager\";\t\t\t\t//resize to fit page size\t\t$(window).on('resize.jqGrid', function () {\t\t\t$(grid_selector).jqGrid( 'setGridWidth', $(\".page-content\").width()-5 );\t    })\t\t//resize on sidebar collapse/expand\t\tvar parent_column = $(grid_selector).closest('[class*=\"col-\"]');\t\t$(document).on('settings.ace.jqGrid' , function(ev, event_name, collapsed) {\t\t\tif( event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed' ) {\t\t\t\t//setTimeout is for webkit only to give time for DOM changes and then redraw!!!\t\t\t\tsetTimeout(function() {\t\t\t\t\t$(grid_selector).jqGrid( 'setGridWidth', parent_column.width() );\t\t\t\t}, 0);\t\t\t}\t    })\t\tjQuery(grid_selector).jqGrid({\t\t\tsubGrid : false,// \t\t\tdata: grid_data,// \t\t\tdatatype: \"local\",            datatype: \"json\", //将这里改为使用JSON数据               url:'../../mvc/erp/system/page', //这是数据的请求地址              repeatitems: false,\t\t\theight:$(document).height() - $(\"#table-div\").offset().top -280,\t\t\tjsonReader: {// \t\t\t\troot: \"rows\",// \t\t\t\ttotal: \"total\",// \t\t\t\tpage: \"page\",// \t\t\t\trecords: \"records\",\t\t\t\trepeatitems: false\t\t\t\t},\t\t\tcolNames:[ '系统编码','系统名称','系统状态','负责人','审批人','创建时间','最后操作人','最后操作时间','操作'],\t\t\tcolModel:[\t\t\t\t\t\t\t\t{name:'sysid',index:'sysid', width:100, sorttype:\"text\", editable: true},\t\t\t\t{name:'sysname',index:'sysname',width:100, sorttype:\"text\", editable:true},\t\t\t\t{name:'status',index:'status', width:40,sortable: true, editable: true,edittype:\"select\",editoptions:{value:\"10:新申请;20:已经批准;30:启用;40:停用\"},formatter:enumStatus},\t\t\t\t{name:'applyer',index:'applyer',width:50, sorttype:\"text\", editable:true},\t\t\t\t{name:'modify_user',index:'modify_user',width:50, sorttype:\"text\", editable:true},\t\t\t\t{name:'created_date',index:'created_date',width:50, sorttype:\"text\", editable:true ,formatter:timeFormatter},\t\t\t\t{name:'modify_user',index:'modify_user',width:50, sorttype:\"text\", editable:true},\t\t\t\t{name:'modified_date',index:'modified_date',width:50, sorttype:\"text\", editable:true,formatter:timeFormatter},\t\t\t\t{name: 'act', index: 'act', width: 40, sortable: false, align: \"left\"}\t\t\t], \t\t\t\tviewrecords : true,\t\t\t rowTotal: 200,\t\t\trowNum:10,\t\t\trowList:[10,20,30],\t\t\tpager : pager_selector,\t\t\taltRows: true,\t\t\t//toppager: true,\t\t\tpagerpos:'center',\t\t\tmultiselect: true,\t\t\t//multikey: \"ctrlKey\",\t        multiboxonly: true,\t\t\t\tloadComplete : function() {\t\t\t\tvar table = this;\t\t\t\tsetTimeout(function(){\t\t\t\t\tupdatePagerIcons(table);\t\t\t\t\tenableTooltips(table);\t\t\t\t}, 0);                var ids =jQuery(grid_selector).getDataIDs();                for (var i = 0; i < ids.length; i++) {                    var rowId = ids[i];                  var sysid=  getRowData(rowId,grid_selector).sysid;                    // code here                     var link=\"http://www.baidu.com\";                    var edit = \" \";                    edit = edit + \"<div class='btn-group' style='position: absolute'>\";                    edit = edit + \"  <button type='button'  class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o lg'></i> 操作</button>\";                    edit = edit + \"  <button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>\";                    edit = edit + \"    <span class='caret'></span>\";                    edit = edit + \"    <span class='sr-only'>Toggle Dropdown</span>\";                    edit = edit + \"  </button>\";                    edit = edit + \"  <ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>\";                    edit = edit + \"    <li ><a  href='#' onclick=\\\"startwarn('\"+sysid+\"')\\\"><i class='fa fa-upload sm'></i>启用告警</a></li>\";                    edit = edit + \"    <li ><a  href='#' onclick=\\\"stopwarn('\"+sysid+\"')\\\"><i class='fa fa-upload sm'></i>停用告警</a></li>\";                    edit = edit + \"    <li ><a  href='#' onclick=\\\"edit('\"+sysid+\"')\\\"><i class='fa fa-upload sm'></i>修改名称</a></li>\";                    edit = edit + \"    <li class='divider'></li>\";                    edit = edit + \"    <li ><a href='#' onclick=\\\"alert('开发中……')\\\"><i class='fa fa-search sm'></i> 详细</a></li>\";                    edit = edit + \"    <li ><a href='#' onclick=\\\"alert('开发中……')\\\"><i class='fa fa-search sm'></i>审批</a></li>\";                    edit = edit + \"    <li ><a href='#'><i class='fa fa-search sm'></i> 删除</a></li>\";                    edit = edit + \"    <li ><a href='#'><i class='fa fa-search sm'></i> 移交</a></li>\";                    edit = edit + \"  </ul>\";                    edit = edit + \"</div>\";                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { act: edit });                };  \t\t\t},\t\t\t\tediturl: \"/dummy.html\",//nothing is saved\t\t\tcaption: \"系统列表\",\t\t\t\tbeforeRequest: function() {\t\t\t\t\t      var jqgrid=$(grid_selector);\t\t\t\t          var sortname=jqgrid.getGridParam('sortname');\t\t\t\t          var sortorder=jqgrid.getGridParam('sortorder');\t\t\t\t          var search_text=$(\"#search_text\").val();\t\t\t\t          jqgrid.jqGrid(\"setGridParam\", {postData:{search_text:search_text,sortname:sortname,sortorder:sortorder}});\t\t        }\t\t});\t\t$(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size\t\t\t\t\t\t\t//switch element when editing inline\t\tfunction aceSwitch( cellvalue, options, cell ) {\t\t\tsetTimeout(function(){\t\t\t\t$(cell) .find('input[type=checkbox]')\t\t\t\t\t.addClass('ace ace-switch ace-switch-5')\t\t\t\t\t.after('<span class=\"lbl\"></span>');\t\t\t}, 0);\t\t}\t\t//enable datepicker\t\t//任务状态格式化\t\tfunction enumStatus(cellvalue, options, rowObject) {\t\t    if (cellvalue == 10) {//10 新申请 20 已经批准 30 启用 40 停用\t\t        return \"新申请\";\t\t    }  else if (cellvalue == 20) {\t\t        return \"已经批准\";\t\t    } else if (cellvalue == 30) {\t\t        return \"启用告警\";\t\t    } else if (cellvalue == 40) {\t\t        return \"停用告警\";\t\t    } \t\t}\t\t\t\t\t//replace icons with FontAwesome icons like above\t\tfunction updatePagerIcons(table) {\t\t\tvar replacement = \t\t\t{\t\t\t\t'ui-icon-seek-first' : 'ace-icon fa fa-angle-double-left bigger-140',\t\t\t\t'ui-icon-seek-prev' : 'ace-icon fa fa-angle-left bigger-140',\t\t\t\t'ui-icon-seek-next' : 'ace-icon fa fa-angle-right bigger-140',\t\t\t\t'ui-icon-seek-end' : 'ace-icon fa fa-angle-double-right bigger-140'\t\t\t};\t\t\t$('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function(){\t\t\t\tvar icon = $(this);\t\t\t\tvar $class = $.trim(icon.attr('class').replace('ui-icon', ''));\t\t\t\t\t\t\t\tif($class in replacement) icon.attr('class', 'ui-icon '+replacement[$class]);\t\t\t})\t\t}\t\t\tfunction enableTooltips(table) {\t\t\t$('.navtable .ui-pg-button').tooltip({container:'body'});\t\t\t$(table).find('.ui-pg-div').tooltip({container:'body'});\t\t}\t\t\t$(document).one('ajaxloadstart.page', function(e) {\t\t\t$(grid_selector).jqGrid('GridUnload');\t\t\t$('.ui-jqdialog').remove();\t\t});\t});\t});</script>

@@ -1,0 +1,44 @@
+
+<title>Smart后台管理系统</title>
+
+<!-- ajax layout which only needs content area -->
+<div class="row">
+	<div class="col-xs-12">
+		<!-- PAGE CONTENT BEGINS -->
+
+		<!-- PAGE CONTENT ENDS -->
+	</div><!-- /.col -->
+</div><!-- /.row -->
+
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+	var scripts = [null, null]
+	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+	  //inline scripts related to this page
+	});
+</script>
+<h1>
+	<a href="../../../p2pwarn-readme-1.0.pdf" target="_blank"><span style="color:#E53333;"><u>系统使用说明下载</u></span></a> 
+</h1>
+
+<p>下面只是简易说明</p>
+<div>
+
+<p>
+	1，pom引入：<br />
+&lt;dependency&gt;<br />
+&nbsp; &lt;groupId&gt;com.jd.creditfactory.email&lt;/groupId&gt;<br />
+&nbsp; &lt;artifactId&gt;creditfactory-email-export&lt;/artifactId&gt;<br />
+&nbsp;&nbsp; &lt;version&gt;1.0.0-20160408.030049-4&lt;/version&gt;<br />
+&lt;/dependency&gt;<br />
+2，Spring配置中引入jsf配置<br />
+&lt;jsf:consumer id="p2pmcService" interface="com.jd.creditfactory.email.export.P2PMCApi" protocol="jsf" alias="p2pmcService" timeout="10000"&gt;<br />
+&lt;/jsf:consumer&gt;<br />
+3，在需要发送邮件的类中注入 p2pmcservice,调用sendMsg方法发送邮件：<br />
+p2pmcService.sendMsg(“注册的系统编码”, “邮件标题”,“邮件内容” ,”订阅分组编码”，”告警级别” ,”应用所在服务器ip”);
+</p>
+<p>
+	<br />
+</p>
+
+</div>

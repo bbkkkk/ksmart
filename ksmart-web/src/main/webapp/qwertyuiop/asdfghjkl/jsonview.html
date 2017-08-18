@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ADI-ERP</title>
+<script type="text/javascript" src="../../res/js/jquery-2.1.3.min.js"></script>
+<script type="text/javascript" src="../../res/js/json2.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		//按钮单击时执行
+
+		$("#search_bt").click(function() {
+			var jsonstr = $("#a_textarea").val();
+			if (jsonstr == "") {
+				alert("不能为空");
+				return;
+			}
+			var todo = confirm("确认？");
+			if (todo == false) {
+				return;
+			}
+			$.ajax({
+				type : "POST",
+				url : "../../service/test/justtest",
+				contentType : "application/json",
+				data : jsonstr,
+				datatype : "json",
+				success : function(data) {
+					$("#b_textarea").text(data.resultcode + "<br>" + data.msg);
+				},
+				error : function(data) {
+					$("#msg").text(data.resultcode + "<br>" + data.msg);
+				}
+			});
+		});
+
+	});
+</script>
+
+</head>
+<body>
+	<div align="center">
+		<input
+			type="button" value="go" id="search_bt">
+	</div>
+	<div align="center">
+		<div id="msg" style="color: red"></div>
+	</div>
+	<table border="0">
+		<tr>
+			<th>&nbsp;</th>
+		</tr>
+		<tr>
+			<td><textarea rows="10" cols="100" id="a_textarea"></textarea></td>
+		</tr>
+		<tr>
+			<td><textarea rows="50" cols="200" id="b_textarea"></textarea></td>
+		</tr>
+	</table>
+
+
+
+
+</body>
+</html>
