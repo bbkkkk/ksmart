@@ -409,34 +409,27 @@ grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
 					updatePagerIcons(table);
 					enableTooltips(table);
 				}, 0);
-                var ids =jQuery(grid_selector).getDataIDs();
-                for (var i = 0; i < ids.length; i++) {
-                    var rowId = ids[i];
-                  var id=  getRowData(rowId,grid_selector).id;
-                  var applyer=  getRowData(rowId,grid_selector).applyer;
-                    // code here 
-                    var edit = " ";
-                    if(is_admin==1||erp_pin==applyer){
-                    edit = edit + "<div class='btn-group' style='position: absolute'>";
-                    edit = edit + "  <button type='button'  class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o lg'></i> 操作</button>";
-                    edit = edit + "  <button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
-                    edit = edit + "    <span class='caret'></span>";
-                    edit = edit + "    <span class='sr-only'>Toggle Dropdown</span>";
-                    edit = edit + "  </button>";
-                   
-                    edit = edit + "  <ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
-                    edit = edit + "    <li ><a  href='#' onclick=\"startwarn('"+id+"')\"><i class='fa fa-upload sm'></i>启用告警</a></li>";
-                    edit = edit + "    <li ><a  href='#' onclick=\"stopwarn('"+id+"')\"><i class='fa fa-upload sm'></i>停用告警</a></li>";
-                    edit = edit + "    <li class='divider'></li>";
-                    edit = edit + "    <li ><a  href='#' onclick=\"edit('"+id+"')\"><i class='fa fa-upload sm'></i>修改</a></li>";
-                    edit = edit + "    <li ><a href='#' onclick=\"edit('"+id+"')\"><i class='fa fa-search sm'></i> 详细</a></li>";
-                    edit = edit + "    <li ><a href='#' onclick=\"del('"+id+"')\"><i class='fa fa-search sm'></i>删除</a></li>";
-                  
-                    edit = edit + "  </ul>";
+                var rows =jQuery(grid_selector).getDataIDs();
+                for (var i = 0; i < rows.length; i++) {
+                    // code here
+                    var link="http://www.baidu.com";
+                    var edit = "    ";
+                    edit = edit + "<div class='btn-group' style='position:absolute;'>" ;
+                    edit = edit + "<button type='button'  onclick=\"viewmodal.showEditPage('#grid'," + rows[i] + ");\" class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
+                    edit = edit + "<button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
+                    edit = edit + "<span class='caret'></span>";
+                    edit = edit + "<span class='sr-only'>Toggle Dropdown</span>";
+                    edit = edit + "</button>";
+                    edit = edit + "<ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
+                    edit = edit + "<li ><a href='#' onclick=\"alert(1)\"><i class='fa fa-upload sm'></i> 详细</a></li>";
+                    edit = edit + "<li class='divider'></li>";
+                    edit = edit + "<li ><a href='#' onclick=\"alert(2)\"><i class='fa fa-search sm'></i> 修改</a></li>";
+                    edit = edit + "<li ><a href='#'><i class='fa fa-search sm'></i>删除</a></li>";
+                    edit = edit + "</ul>";
                     edit = edit + "</div>";
-                    jQuery(grid_selector).jqGrid('setRowData', ids[i], { act: edit });  }
-                };  
-			},
+                    jQuery(grid_selector).jqGrid('setRowData', rows[i], { act: edit });
+                };
+            },
 	
 			editurl: "/dummy.html",//nothing is saved
 			caption: "系统列表",

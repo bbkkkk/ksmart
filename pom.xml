@@ -281,11 +281,7 @@
         <version>${logback.version}</version>
       </dependency>
 
-      <dependency>
-        <groupId>com.rongzhong</groupId>
-        <artifactId>component-yryz</artifactId>
-        <version>1.0-SNAPSHOT</version>
-      </dependency>
+
 
       <!-- JSON setting -->
       <dependency>
