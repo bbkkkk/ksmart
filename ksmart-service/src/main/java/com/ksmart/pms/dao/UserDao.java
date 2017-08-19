@@ -15,7 +15,9 @@ public interface UserDao {
 
     public int update(Map<String, Object> params);
 
-    public int del(Map<String, Object> params);
+    public List<Map<String, Object>> queryListById(@Param(value = "id") long id);
+
+    public int delById(@Param(value = "id") long id);
 
     public int queryCount(@Param(value = "params")Map<String, Object> params);
 

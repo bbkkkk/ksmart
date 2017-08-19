@@ -134,7 +134,7 @@
                             <div class="col-sm-9">
                                 <textarea class="autosize-transition form-control" name="comment"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
-                                          placeholder="20字内" data-rule="required"></textarea>
+                                          placeholder="20字内"  ></textarea>
                             </div>
                         </div>
 
@@ -225,7 +225,7 @@
                             <div class="col-sm-9">
                                 <textarea class="autosize-transition form-control" name="comment"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
-                                          placeholder="20字内" data-rule="required"></textarea>
+                                          placeholder="20字内" ></textarea>
                             </div>
                         </div>
 
@@ -320,18 +320,19 @@
                 var result = getRemoteData(reqUrl, {"id": temp_groupid});
                 //  alert(result);
                 $("#updateAppForm [name='id']").val(result.id);
-                $("#updateAppForm [name='msg_type']").val(result.msg_type);
-                $("#updateAppForm [name='groupid']").val(result.groupid);
-                $("#updateAppForm [name='sysid']").val(result.sysid);
-                $("#updateAppForm [name='sysname']").val(result.sysname);
-                $("#updateAppForm [name='emails']").val(result.emails);
+                $("#updateAppForm [name='uname']").val(result.uname);
+                $("#updateAppForm [name='pwd']").val(result.pwd);
+                $("#updateAppForm [name='real_name']").val(result.real_name);
+                $("#updateAppForm [name='cert_no']").val(result.cert_no);
+                $("#updateAppForm [name='sex']").val(result.sex);
+                $("#updateAppForm [name='comment']").val(result.comment);
 
             });
 
             $("#btn-update-app").click(
                     function () {
                         if (isValid("updateAppForm")) {
-                            var reqUrl = '../../mvc/erp/group/update';
+                            var reqUrl = '../../mvc/pms/user/update';
                             postFormData(reqUrl, "updateAppForm", "updateAppModal",
                                     "确定保存应用信息？", "grid-table");
                         }
@@ -418,6 +419,8 @@
                     var rows = jQuery(grid_selector).getDataIDs();
                     for (var i = 0; i < rows.length; i++) {
                         // code here
+                        var rowId = rows[i];
+                        var id=  getRowData(rowId,grid_selector).id;
                         var edit = "    ";
                         edit = edit + "<div class='btn-group' style='position:absolute;'>";
                         edit = edit + "<button type='button' class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
@@ -426,10 +429,10 @@
                         edit = edit + "<span class='sr-only'>Toggle Dropdown</span>";
                         edit = edit + "</button>";
                         edit = edit + "<ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
-                        edit = edit + "<li ><a href='#' onclick=\"alert(1)\"><i class='fa fa-upload sm'></i> 详细</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit("+id+")\"><i class='fa fa-upload sm'></i> 详细</a></li>";
                         edit = edit + "<li class='divider'></li>";
-                        edit = edit + "<li ><a href='#' onclick=\"edit('" + id + "')\"><i class='fa fa-search sm'></i> 修改</a></li>";
-                        edit = edit + "<li ><a href='#' onclick=\"del('" + id + "')\"><i class='fa fa-search sm'></i>删除</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit("+id+")\"><i class='fa fa-upload sm'></i> 修改</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"del("+id+")\"><i class='fa fa-upload sm'></i> 删除</a></li>";
                         edit = edit + "</ul>";
                         edit = edit + "</div>";
                         jQuery(grid_selector).jqGrid('setRowData', rows[i], {act: edit});

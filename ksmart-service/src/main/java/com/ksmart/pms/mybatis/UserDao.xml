@@ -71,6 +71,12 @@
         </trim>
         where id = #{id}
     </update>
+    <select id="queryListById"  resultType="Map">
+        select * from smt_user where  id=#{id}
+    </select>
+    <delete id="delById" >
+        delete from smt_user where id=#{id}
+    </delete>
     <select id="queryCount"  parameterType="Map" resultType="Integer">
         select count(1) from smt_user t
         <where>

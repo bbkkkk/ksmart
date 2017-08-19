@@ -33,6 +33,17 @@ public class UserServiceImpl implements UserService {
     public int update(Map<String, Object> params){
         return userDao.update(params);
     }
+
+    @Override
+    public List<Map<String, Object>> queryListById(long id) {
+        return userDao.queryListById(id);
+    }
+
+    @Override
+    public int delById(long id) {
+        return userDao.delById(id);
+    }
+
     @Override
     public JSONObject page(String page, String rows, Map<String, Object> params, String sortname, String sortorder) {
         log.info("分页查询条件：page,rows,search_text,sortname,sortorder");

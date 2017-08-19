@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,40 +33,49 @@ public class UserCtl extends BaseCtl {
     @ResponseBody
     public Map<String, Object> add(HttpServletRequest request) {
         Map<String,Object> params=req2Map(request);
+        log.info("入参："+params);
         JSONObject json = new JSONObject();
         json.put("statusCode", 200);
         int cnt = userService.insert(params);
         json.put("cnt", cnt);
-        log.info(json.toString());
+        log.info("出参："+json.toString());
         return json;
     }
 
     @RequestMapping(value = "/update")
     @ResponseBody
     public Map<String, Object> update(HttpServletRequest request) {
-        String sysid = request.getParameter("sysid");
-        log.info("sysid ：" + sysid);
-        String msg_type = request.getParameter("msg_type");
-        log.info("msg_type ：" + msg_type);
-        String emails = request.getParameter("emails");
-        log.info("emails ：" + emails);
-        String groupid = request.getParameter("groupid");
-        log.info("groupid ：" + groupid);
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("sysid", sysid);
-        params.put("msg_type", msg_type);
-        params.put("emails", emails);
-        params.put("groupid", groupid);
-        params.put("status", 20);
-        params.put("applyer", request.getSession().getAttribute("erp_pin"));
+        Map<String,Object> params=req2Map(request);
+        log.info("入参："+params);
         JSONObject json = new JSONObject();
         json.put("statusCode", 200);
-        int cnt = userService.insert(params);
+        int cnt = userService.update(params);
         json.put("cnt", cnt);
-        log.info(json.toString());
+        log.info("出参："+json.toString());
         return json;
     }
+    @RequestMapping(value = "/show")
+    @ResponseBody
+    public Map<String, Object> show(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        log.info("id ：" + id);
+        List<Map<String, Object>> list = userService.queryListById(Long.parseLong(id));
+        Map<String, Object> result = list.get(0);
+        result.put("statusCode", 200);
+        return result;
+    }
+    @RequestMapping(value = "/del")
+    @ResponseBody
+    public Map<String, Object> delete(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        log.error("系统关键操作日志：" + request.getSession().getAttribute("erp_pin") + "调用了group delete id=" + id);
 
+        Map<String, Object> result = new HashMap<String, Object>();
+        userService.delById(Long.parseLong(id));
+        result.put("statusCode", 200);
+        result.put("message", "系统编码ok");
+        return result;
+    }
     @RequestMapping(value = "/page")
     @ResponseBody
     public JSONObject page(HttpServletRequest request, Model model) {

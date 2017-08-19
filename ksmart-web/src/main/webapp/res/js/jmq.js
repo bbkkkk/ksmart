@@ -204,7 +204,10 @@ function timeFormatter(cellvalue, options, rowObject) {
     var time = new Date(parseFloat(cellvalue));
     return time.format("yyyy-MM-dd hh:mm:ss");
 }
-
+function timeFormatter(cellvalue) {
+    var time = new Date(parseFloat(cellvalue));
+    return time.format("yyyy-MM-dd hh:mm:ss");
+}
 
 function dateTimeFormatter(cellvalue, options, rowObject) {
     var time = new Date(parseFloat(cellvalue));

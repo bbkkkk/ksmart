@@ -17,7 +17,9 @@ function getRemoteData(url, params) {
            progress.close().remove()
        },
        success: function (data) {
-       	   data=JSON.parse(data);
+           if (typeof data === 'string') {
+               data = JSON.parse(data)
+           }
            progress.close().remove();
            if (data.statusCode == "200") {
         	   result= data;
