@@ -62,6 +62,7 @@ public class UserCtl extends BaseCtl {
         List<Map<String, Object>> list = userService.queryListById(Long.parseLong(id));
         Map<String, Object> result = list.get(0);
         result.put("statusCode", 200);
+        log.info("出参："+result);
         return result;
     }
 //    @RequestMapping(value = "/del")

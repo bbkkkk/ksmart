@@ -312,15 +312,13 @@
                 var reqUrl = '../../mvc/pms/user/show';
                 var result = getRemoteData(reqUrl, {"id": temp_groupid});
                 //  alert(result);
-                $("#updateAppForm [name='id']").val(result.id);
-                $("#updateAppForm [name='uname']").val(result.uname);
-                $("#updateAppForm [name='pwd']").val(result.pwd);
-                $("#updateAppForm [name='real_name']").val(result.real_name);
-                $("#updateAppForm [name='cert_no']").val(result.cert_no);
-                $("#updateAppForm [name='birthday']").val(result.birthday);
-                $("#updateAppForm [name='sex']").val(result.sex);
-                $("#updateAppForm [name='comment']").val(result.comment);
-
+                var tmpobj;
+                for(var key in result){
+                    tmpobj=$("#updateAppForm [name='"+key+"']");
+                    if(tmpobj){
+                        tmpobj.val(result[key]);
+                    }
+                }
             });
 
             $("#btn-update-app").click(
