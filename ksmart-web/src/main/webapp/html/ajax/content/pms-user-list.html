@@ -48,7 +48,7 @@
     <div class="row">
         <div class="col-xs-12" id="table-div">
             <table id="grid-table"></table>
-            <div id="grid-pager" style="margin-top: 10px; margin-bottom: 0px"></div>
+            <div id="grid-pager" style="margin-top: 1px; margin-bottom: 0px"></div>
         </div>
     </div>
     <!-- start -->
@@ -260,9 +260,11 @@
     //        $("#grid-table").jqGrid().trigger("reloadGrid");
     //    }
     function del(id) {
-        var reqUrl = '../../mvc/pms/user/lgdel';
-        getRemoteData(reqUrl, {id: id});
-        $("#grid-table").jqGrid().trigger("reloadGrid");
+        confirm("确定删除此记录？", function () {
+            var reqUrl = '../../mvc/pms/user/lgdel';
+            getRemoteData(reqUrl, {id: id});
+            $("#grid-table").jqGrid().trigger("reloadGrid");
+        })
     }
     //    /**
     //     * 按条件查询
@@ -313,9 +315,9 @@
                 var result = getRemoteData(reqUrl, {"id": temp_groupid});
                 //  alert(result);
                 var tmpobj;
-                for(var key in result){
-                    tmpobj=$("#updateAppForm [name='"+key+"']");
-                    if(tmpobj){
+                for (var key in result) {
+                    tmpobj = $("#updateAppForm [name='" + key + "']");
+                    if (tmpobj) {
                         tmpobj.val(result[key]);
                     }
                 }
