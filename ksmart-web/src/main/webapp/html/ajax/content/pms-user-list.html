@@ -3,8 +3,8 @@
 <link rel="stylesheet" href="../../assets/css/jquery-ui.css"/>
 <link rel="stylesheet" href="../../assets/css/datepicker.css"/>
 <link rel="stylesheet" href="../../assets/css/ui.jqgrid.css"/>
-<link rel="stylesheet" href="../../assets/css/jquery-ui.custom.css" />
-<link rel="stylesheet" href="../../assets/css/bootstrap-multiselect.css" />
+<link rel="stylesheet" href="../../assets/css/jquery-ui.custom.css"/>
+<link rel="stylesheet" href="../../assets/css/bootstrap-multiselect.css"/>
 
 <style>
     <!--
@@ -86,7 +86,7 @@
 
                             <div class="col-sm-9">
                                 <input type="text" name="pwd" placeholder="名称,必填" class="col-xs-10
-								col-sm-7"  data-rule="required"/>
+								col-sm-7" data-rule="required"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -95,13 +95,13 @@
 
                             <div class="col-sm-9">
                                 <input type="text" name="real_name" placeholder="名称,必填" class="col-xs-10
-								col-sm-7"  data-rule="required"/>
+								col-sm-7" data-rule="required"/>
                             </div>
                         </div>
                         <div class="form-group">
 
-                                <label class="col-sm-3 control-label no-padding-right">
-                                    性别</label>
+                            <label class="col-sm-3 control-label no-padding-right">
+                                性别</label>
                             <div class="col-sm-9" style="width: 130px;">
                                 <select class="form-control" id="sex" name="sex">
                                     <option value=""></option>
@@ -132,7 +132,7 @@
                             <label class="col-sm-3 control-label no-padding-right" for="form-description">备注</label>
 
                             <div class="col-sm-9">
-                                <textarea class="autosize-transition form-control" id="form-field-11" name="emails"
+                                <textarea class="autosize-transition form-control" id="form-field-11" name="comment"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
                                           placeholder="20字内" data-rule="required"></textarea>
                             </div>
@@ -286,41 +286,7 @@
 
             });
             $('#addApplyModal').on('shown.bs.modal', function () {
-                alert(1);
                 $("#addApplyForm")[0].reset();
-                $("#sex").append('<option value="' + 11+ '">' + 11 + '</option>');
-                $("#sex").append('<option value="' + 22+ '">' + 22 + '</option>');
-                $("#sex").val(22);
-//                var newCitys = new Array();
-//                newCitys.push({
-//                    label :'v1',
-//                    value : '1'
-//                });
-//                newCitys.push({
-//                    label :'v2',
-//                    value : '2'
-//                });
-//                $("#sex").multiselect('dataprovider', newCitys);
-////                $('#sex').multiselect('refresh');
-//                $("#sex").multiselect("setSelects", [2]);
-//                $('#sex').multiselect('refresh');
-//                $('#sex').addClass('tag-input-style');
-
-                alert(2);
-//                $("#addApplyForm [name='sysid']").blur(function () {
-//                    if (this.value != '') {
-//                        var reqUrl = '../../mvc/erp/group/getsystem';
-//                        var result = getRemoteData(reqUrl, {"sysid": this.value});
-//                        if (result.statusCode == 200) {
-//                            $("#addApplyForm [name='sysname']").val(result.sysname);
-//                        } else {
-//                            $("#addApplyForm [name='sysname']").val("");
-//                        }
-//
-//                    }
-//
-//
-//                });
             });
             $("#btn-update-app").click(
                     function () {
@@ -337,9 +303,22 @@
                     {page: 1}
                 ]);
             });
-            //添加应用
+            //添加
             $("#btn_add").click(function () {
-                alert(1);
+                if (isValid("addApplyForm")) {
+                    //此处可以加校验
+//                    var reqUrl = '../../mvc/erp/system/checksysid';
+//
+//                    var sysid=$("#addApplyForm [name='sysid']").val();
+//                    var result=getRemoteData(reqUrl,{"sysid":sysid});
+//
+//                    if(result.statusCode==300){
+//                        return;
+//                    }
+
+                    reqUrl = '../../mvc/pms/user/add';
+                    postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加应用信息？", "grid-table")
+                }
 
 
             });
@@ -347,19 +326,18 @@
 
             $("#btn-add-apply").click(function () {
                 if (isValid("addApplyForm")) {
-                    var reqUrl = '../../mvc/erp/group/checkmsgtype';
-
-                    var msg_type = $("#addApplyForm [name='msg_type']").val();
-                    var sysid = $("#addApplyForm [name='sysid']").val();
-                    var result = getRemoteData(reqUrl, {"msg_type": msg_type, "sysid": sysid});
-
-                    if (result.statusCode == 300) {
-                        return;
-                    }
-
-
-                    reqUrl = '../../mvc/erp/group/add';
-                    postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加应用信息？", "grid-table")
+                    //此处可加校验
+//                    var reqUrl = '../../mvc/erp/group/checkmsgtype';
+//
+//                    var msg_type = $("#addApplyForm [name='msg_type']").val();
+//                    var sysid = $("#addApplyForm [name='sysid']").val();
+//                    var result = getRemoteData(reqUrl, {"msg_type": msg_type, "sysid": sysid});
+//
+//                    if (result.statusCode == 300) {
+//                        return;
+//                    }
+                    reqUrl = '../../mvc/pms/user/add';
+                    postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加信息？", "grid-table");
                 }
             });
 
@@ -422,10 +400,9 @@
                     var rows = jQuery(grid_selector).getDataIDs();
                     for (var i = 0; i < rows.length; i++) {
                         // code here
-                        var link = "http://www.baidu.com";
                         var edit = "    ";
                         edit = edit + "<div class='btn-group' style='position:absolute;'>";
-                        edit = edit + "<button type='button'  onclick=\"viewmodal.showEditPage('#grid'," + rows[i] + ");\" class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
+                        edit = edit + "<button type='button' class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
                         edit = edit + "<button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
                         edit = edit + "<span class='caret'></span>";
                         edit = edit + "<span class='sr-only'>Toggle Dropdown</span>";
@@ -443,7 +420,7 @@
                 },
 
                 editurl: "/dummy.html",//nothing is saved
-                caption: "系统列表",
+                caption: "数据列表",
                 beforeRequest: function () {
                     var jqgrid = $(grid_selector);
                     var sortname = jqgrid.getGridParam('sortname');
