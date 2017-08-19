@@ -45,6 +45,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int lgDelById(long id) {
+        return userDao.lgDelById(id);
+    }
+
+    @Override
     public JSONObject page(String page, String rows, Map<String, Object> params, String sortname, String sortorder) {
         log.info("分页查询条件：page,rows,search_text,sortname,sortorder");
         log.info("分页查询参数：" +params);

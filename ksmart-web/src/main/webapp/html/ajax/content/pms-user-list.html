@@ -21,34 +21,27 @@
             <div class="col-md-4">
                 <div class="input-group">
                     <span class="input-group-addon">用户名</span>
-                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 100px;" placeholder="用户名"
+                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 150px;"
+                           placeholder="用户名"
                            id="search_text">
                     <span class="input-group-addon">身份证号</span>
-                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 200px;" placeholder="身份证号"
+                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 240px;"
+                           placeholder="身份证号"
                            id="search_text2">
                     <span class="input-group-btn">
 						<button class="btn btn-primary btn-search" style="height: 32px" type="button" id="btn_search">
 							<i class="icon-search"></i>搜索
 						</button>
 					</span>
+                    <span class="input-group-btn">
+					 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addApplyModal"
+                             style="margin-left: 10px; height: 32px">
+                    <i class="icon-plus"></i>新增
+                    </button>
+					</span>
                 </div>
             </div>
-            <div class="btn-group" style="height: 32px">
-                <!--
-                    <button id="btn_add" class="btn btn-success" style="margin-left: -2px; margin-right: 10px;height: 32px" type="button" >
-                        <i class="icon-plus"></i>新建
-                    </button>
-                    <button id="btn_edit"  class="btn btn-success" style="margin-left: -2px;margin-right: 10px; height: 32px" type="button" >
-                        <i class="icon-plus"></i>修改
-                    </button>
-                    <button id="btn_del"  class="btn btn-success" style="margin-left: -2px;margin-right: 10px; height: 32px" type="button" >
-                        <i class="icon-plus"></i>删除
-                    </button> -->
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addApplyModal"
-                        style="margin-left: -2px; height: 32px">
-                    <i class="icon-plus"></i>新增
-                </button>
-            </div>
+
         </div>
     </div>
 
@@ -134,7 +127,7 @@
                             <div class="col-sm-9">
                                 <textarea class="autosize-transition form-control" name="comment"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
-                                          placeholder="20字内"  ></textarea>
+                                          placeholder="20字内"></textarea>
                             </div>
                         </div>
 
@@ -225,7 +218,7 @@
                             <div class="col-sm-9">
                                 <textarea class="autosize-transition form-control" name="comment"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
-                                          placeholder="20字内" ></textarea>
+                                          placeholder="20字内"></textarea>
                             </div>
                         </div>
 
@@ -256,34 +249,34 @@
         $('#updateAppModal').modal('show');
     }
 
-//    function startwarn(id) {
-//        var reqUrl = '../../mvc/erp/group/startstop';
-//        getRemoteData(reqUrl, {id: id, status: 30});
-//        $("#grid-table").jqGrid().trigger("reloadGrid");
-//    }
-//    function stopwarn(id) {
-//        var reqUrl = '../../mvc/erp/group/startstop';
-//        getRemoteData(reqUrl, {id: id, status: 40});
-//        $("#grid-table").jqGrid().trigger("reloadGrid");
-//    }
+    //    function startwarn(id) {
+    //        var reqUrl = '../../mvc/erp/group/startstop';
+    //        getRemoteData(reqUrl, {id: id, status: 30});
+    //        $("#grid-table").jqGrid().trigger("reloadGrid");
+    //    }
+    //    function stopwarn(id) {
+    //        var reqUrl = '../../mvc/erp/group/startstop';
+    //        getRemoteData(reqUrl, {id: id, status: 40});
+    //        $("#grid-table").jqGrid().trigger("reloadGrid");
+    //    }
     function del(id) {
-        var reqUrl = '../../mvc/pms/user/del';
+        var reqUrl = '../../mvc/pms/user/lgdel';
         getRemoteData(reqUrl, {id: id});
         $("#grid-table").jqGrid().trigger("reloadGrid");
     }
-//    /**
-//     * 按条件查询
-//     * @param cnd 条件
-//     * @param table   表格
-//     */
-//    function findByCnd(cnd, table) {
-//        var grid = $(table);
-//        var postData = grid.jqGrid("getGridParam", "postData");
-//        $.extend(postData, cnd);
-//        grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
-//            {page: 1}
-//        ]);
-//    }
+    //    /**
+    //     * 按条件查询
+    //     * @param cnd 条件
+    //     * @param table   表格
+    //     */
+    //    function findByCnd(cnd, table) {
+    //        var grid = $(table);
+    //        var postData = grid.jqGrid("getGridParam", "postData");
+    //        $.extend(postData, cnd);
+    //        grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
+    //            {page: 1}
+    //        ]);
+    //    }
     /**************************************************************************************************************************************************************/
 
     $('.page-content-area').ace_ajax('loadScripts', scripts, function () {
@@ -324,6 +317,7 @@
                 $("#updateAppForm [name='pwd']").val(result.pwd);
                 $("#updateAppForm [name='real_name']").val(result.real_name);
                 $("#updateAppForm [name='cert_no']").val(result.cert_no);
+                $("#updateAppForm [name='birthday']").val(result.birthday);
                 $("#updateAppForm [name='sex']").val(result.sex);
                 $("#updateAppForm [name='comment']").val(result.comment);
 
@@ -420,7 +414,7 @@
                     for (var i = 0; i < rows.length; i++) {
                         // code here
                         var rowId = rows[i];
-                        var id=  getRowData(rowId,grid_selector).id;
+                        var id = getRowData(rowId, grid_selector).id;
                         var edit = "    ";
                         edit = edit + "<div class='btn-group' style='position:absolute;'>";
                         edit = edit + "<button type='button' class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
@@ -429,10 +423,10 @@
                         edit = edit + "<span class='sr-only'>Toggle Dropdown</span>";
                         edit = edit + "</button>";
                         edit = edit + "<ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
-                        edit = edit + "<li ><a href='#' onclick=\"edit("+id+")\"><i class='fa fa-upload sm'></i> 详细</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit(" + id + ")\"><i class='fa fa-upload sm'></i> 详细</a></li>";
                         edit = edit + "<li class='divider'></li>";
-                        edit = edit + "<li ><a href='#' onclick=\"edit("+id+")\"><i class='fa fa-upload sm'></i> 修改</a></li>";
-                        edit = edit + "<li ><a href='#' onclick=\"del("+id+")\"><i class='fa fa-upload sm'></i> 删除</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit(" + id + ")\"><i class='fa fa-upload sm'></i> 修改</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"del(" + id + ")\"><i class='fa fa-upload sm'></i> 删除</a></li>";
                         edit = edit + "</ul>";
                         edit = edit + "</div>";
                         jQuery(grid_selector).jqGrid('setRowData', rows[i], {act: edit});

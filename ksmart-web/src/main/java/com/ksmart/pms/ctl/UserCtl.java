@@ -64,18 +64,30 @@ public class UserCtl extends BaseCtl {
         result.put("statusCode", 200);
         return result;
     }
-    @RequestMapping(value = "/del")
+//    @RequestMapping(value = "/del")
+//    @ResponseBody
+//    public Map<String, Object> delete(HttpServletRequest request) {
+//        String id = request.getParameter("id");
+//        log.error("系统关键操作日志：" + request.getSession().getAttribute("erp_pin") + "调用了group delete id=" + id);
+//
+//        Map<String, Object> result = new HashMap<String, Object>();
+//        userService.delById(Long.parseLong(id));
+//        result.put("statusCode", 200);
+//        result.put("message", "系统编码ok");
+//        return result;
+//    }
+    @RequestMapping(value = "/lgdel")
     @ResponseBody
-    public Map<String, Object> delete(HttpServletRequest request) {
+    public Map<String, Object> lgdel(HttpServletRequest request) {
         String id = request.getParameter("id");
-        log.error("系统关键操作日志：" + request.getSession().getAttribute("erp_pin") + "调用了group delete id=" + id);
-
+        log.error("系统关键操作日志：" + request.getSession().getAttribute("userid") + "调用了smt_user delete id=" + id);
         Map<String, Object> result = new HashMap<String, Object>();
-        userService.delById(Long.parseLong(id));
+        userService.lgDelById(Long.parseLong(id));
         result.put("statusCode", 200);
         result.put("message", "系统编码ok");
         return result;
     }
+
     @RequestMapping(value = "/page")
     @ResponseBody
     public JSONObject page(HttpServletRequest request, Model model) {
