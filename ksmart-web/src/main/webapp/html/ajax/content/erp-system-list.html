@@ -260,6 +260,8 @@ grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
         });	
 		
         $('#addApplyModal').on('shown.bs.modal', function() {
+            alert(1);
+            $('.select2').css('width','200px').select2({allowClear:true});
        	 $("#addApplyForm")[0].reset();
         });
         

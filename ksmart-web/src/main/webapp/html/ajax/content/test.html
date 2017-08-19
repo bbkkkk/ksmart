@@ -1,15 +1,53 @@
-<div class="btn-group">
-	<button class="btn btn-default btn-xs" type="button">操作</button>
-	<button class="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
-		<span class="caret"></span><span class="sr-only"></span>
-	</button>
-	<ul class="dropdown-menu pull-right" role="menu">
-		<li><a class="remoteModal" id="deitapp_599666" role="button" href="#appModal" data-toggle="modal" remote-target="#appModal" remote-url="/jmq-web/system/599666.do"><i class="icon-edit"></i><span class="menu-span">编辑</span></a></li>
-		<li><a href="javascript:deleteApp(599666)"><i class="icon-trash"></i><span class="menu-span">删除</span></a></li>
-		<li class="divider"></li>
-		<li><a class="remoteModal" id="adduser_599666" role="button" href="#addSystemUserModal" data-toggle="modal" remote-target="#addSystemUserModal" remote-url="/jmq-web/system/findUser.do?systemId=599666"><i class="icon-user"></i><span class="menu-span">用户授权</span></a></li>
-		<li><a class="remoteModal" id="certificate_599666" role="button" href="#certificateModal" data-toggle="modal" remote-target="#certificateModal" remote-url="/jmq-web/system/getCertificate.do?app=creditfactory2"><i class="icon-lock"></i><span class="menu-span">获取连接凭证</span></a></li>
-		<li><a class="remoteModal" id="relate_599666" role="button" href="#relateModal" data-toggle="modal" remote-target="#relateModal" remote-url="/jmq-web/system/findJoneApp.do?systemId=599666"><i class="icon-plus"></i><span class="menu-span">关联Jone</span></a></li>
-		<li><a class="remoteModal" id="detail_599666" role="button" href="#systemDetailModal" data-toggle="modal" remote-target="#systemDetailModal" remote-url="/jmq-web/system/pubSub/599666/creditfactory2.do"><i class="icon-info"></i><span class="menu-span">详细信息</span></a></li>
-	</ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>下拉框 - Ace Admin</title>
+	<!--@* 这个控制宽度(只是控制div的) *@-->
+	<link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+
+	<!--@* 以下两个对下拉框的样式有影响 *@-->
+	<link rel="stylesheet" href="../../assets/css/chosen.css" />
+	<link rel="stylesheet" href="../../assets/css/ace.min.css" />
+	　　 <link rel="stylesheet" href="../../assets/css/css.css"/>
+	<link rel="stylesheet" href="../../assets/css/font-awesome.min.css" />
+
+	<script src="/Scripts/jquery_2_1_0_min.js"></script>
+	<!--[if IE]>
+	<script src="/Scripts/jquery_1_11_0_min.js"></script>
+	<![endif]-->
+	<script src="/assets/js/chosen.jquery.min.js"></script>
+
+	<script type="text/javascript">
+		$(function ($) {
+			$('.chosen-select').chosen({ allow_single_deselect: true });
+			//窗口大小改变时，下拉框跟着缩放
+			$(window).on('resize.chosen', function () {
+				var w = $('.chosen-select').parent().width();
+				$('.chosen-select').next().css({ 'width': w });
+			}).trigger('resize.chosen');
+		});
+	</script>
+</head>
+
+<body>
+<div class="modal-body">
+	<div class="row">
+		<div class="col-xs-12 col-sm-4">
+			<!-- Html示例 -->
+			<select class="chosen-select" name="Hero" data-placeholder="请选择英雄...">
+				<option value=""></option>    <!-- 默认的Text里不要放东西，否则不会选择(请选择) -->
+				<option value="1">刘备</option>
+				<option value="2">关羽</option>
+				<option value="3">张飞</option>
+			</select>
+
+			<div class="space-4"></div>
+
+			<!-- MVC版示例 -->
+			<!--@*对于AceAdmin很多-，在MVC中要用_代替*@-->
+			<!--@Html.DropDownList("SelectListItem", null, null, new { @class = "chosen-select", data_placeholder="请选择英雄...", name = "Hero" })-->
+		</div>
+	</div>
 </div>
+</body>
+</html>
