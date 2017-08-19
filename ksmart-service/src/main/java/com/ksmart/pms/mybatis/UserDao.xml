@@ -82,7 +82,7 @@
         </where>
     </select>
     <select id="queryPage" resultType="Map">
-        select id,uname,pwd,real_name,cert_no,sex,DATE_FORMAT(ctime,'%Y-%m-%d %H:%i:%S') ctime,DATE_FORMAT(utime,'%Y-%m-%d %H:%i:%S') utime from smt_user
+        select id,uname,pwd,real_name,cert_no,sex,ctime, utime from smt_user
         <where>
             <if test="params!=null and params.size()!=0">
                 <foreach collection="params" index="key" item="value" separator=" and ">
