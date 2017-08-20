@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ksmart.demo.dao.TemplateDao">
+    <insert id="insert" parameterType="Map">
+        insert into smt_template
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="uname  != null">
+                uname,
+                </if>
+                <if test="sex  != null">
+                sex,
+                </if>
+                <if test="birthday  != null">
+                birthday,
+                </if>
+                <if test="email  != null">
+                email,
+                </if>
+                <if test="addr  != null">
+                addr,
+                </if>
+                <if test="comment  != null">
+                comment,
+                </if>
+            <if test="SE_UID != null">
+                cid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="uname  != null">
+                #{uname},
+                </if>
+                <if test="sex  != null">
+                #{sex},
+                </if>
+                <if test="birthday  != null">
+                #{birthday},
+                </if>
+                <if test="email  != null">
+                #{email},
+                </if>
+                <if test="addr  != null">
+                #{addr},
+                </if>
+                <if test="comment  != null">
+                #{comment},
+                </if>
+            <if test="SE_UID != null">
+            #{SE_UID},
+            </if>
+        </trim>
+    </insert>
+    <update id="update">
+        update
+    smt_template
+        <trim prefix="set" suffixOverrides=",">
+                <if test="uname  != null">
+                uname=#{uname},
+                </if>
+                <if test="sex  != null">
+                sex=#{sex},
+                </if>
+                <if test="birthday  != null">
+                birthday=#{birthday},
+                </if>
+                <if test="email  != null">
+                email=#{email},
+                </if>
+                <if test="addr  != null">
+                addr=#{addr},
+                </if>
+                <if test="comment  != null">
+                comment=#{comment},
+                </if>
+            <if test="SE_UID!=null">uid=#{SE_UID},</if>
+        </trim>
+        where id = #{id} and isdel=0
+    </update>
+    <update id="lgDelById">
+        update smt_template set isdel=1,uid=#{SE_UID} where id = #{id}
+    </update>
+    <select id="queryListById" resultType="Map">
+        select * from smt_template where id=#{id} and isdel=0
+    </select>
+    <delete id="delById">
+        delete from smt_template where id=#{id}
+    </delete>
+    <select id="queryCount" parameterType="Map" resultType="Integer">
+        select count(1) from smt_template t
+        <where>
+            isdel=0
+            <if test="params!=null and params.size()!=0">
+                and
+                <foreach collection="params" index="key" item="value" separator=" and ">
+                ${key} like CONCAT('%',#{value},'%' )
+                </foreach>
+            </if>
+        </where>
+
+    </select>
+    <select id="queryPage" resultType="Map">
+        <trim prefix="select " suffixOverrides=",">
+        id,
+        uname,
+        sex,
+        birthday,
+        email,
+        addr,
+        ctime,
+        utime,
+        </trim>
+        from smt_template
+        <where>
+            isdel=0
+            <if test="params!=null and params.size()!=0">
+                and
+                <foreach collection="params" index="key" item="value" separator=" and ">
+                ${key} like CONCAT('%',#{value},'%' )
+                </foreach>
+            </if>
+        </where>
+        order by ${sortname} ${sortorder} limit #{limit_start},#{limit_end}
+    </select>
+</mapper>
