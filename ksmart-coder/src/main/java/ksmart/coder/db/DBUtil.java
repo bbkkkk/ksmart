@@ -2,7 +2,6 @@ package ksmart.coder.db;
 
 import ksmart.coder.model.EnumKV;
 import ksmart.coder.model.FieldBean;
-import com.platform.tool.db.DbConn;
 
 import java.sql.*;
 import java.util.ArrayList;

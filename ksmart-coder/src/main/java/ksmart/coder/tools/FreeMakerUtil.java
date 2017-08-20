@@ -10,7 +10,7 @@ import freemarker.template.TemplateException;
 public class FreeMakerUtil {
 
     /**
-     * »ñÈ¡Ä£°åÎÄ¼ş
+     * è·å–æ¨¡æ¿æ–‡ä»¶
      *
      * @param name
      * @return
@@ -30,7 +30,7 @@ public class FreeMakerUtil {
     }
 
     /**
-     * ¿ØÖÆÌ¨Êä³ö
+     * æ§åˆ¶å°è¾“å‡º
      *
      * @param 'name
      * @param root
@@ -49,18 +49,18 @@ public class FreeMakerUtil {
     }
 
     /**
-     * Éú³ÉÎÄ¼ş
+     * ç”Ÿæˆæ–‡ä»¶
      *
-     * @param 'name:Ä£°åÃû
-     * @param root£ºÊı¾İÔ­ĞÍ
-     * @param 'outFile£ºÊä³öÂ·¾¶(È«Â·¾¶Ãû)
+     * @param 'name:æ¨¡æ¿å
+     * @param rootï¼šæ•°æ®åŸå‹
+     * @param 'outFileï¼šè¾“å‡ºè·¯å¾„(å…¨è·¯å¾„å)
      */
     public static void generateFile(String templateName, Map<String, Object> root, String outFilePath, String fileName) {
         outFilePath = outFilePath.replaceAll("\\.", "\\\\");
         FileWriter out = null;
         try {
             createDirectory(outFilePath);
-            // Í¨¹ıÒ»¸öÎÄ¼şÊä³öÁ÷£¬¾Í¿ÉÒÔĞ´µ½ÏàÓ¦µÄÎÄ¼şÖĞ£¬´Ë´¦ÓÃµÄÊÇ¾ø¶ÔÂ·¾¶
+            // é€šè¿‡ä¸€ä¸ªæ–‡ä»¶è¾“å‡ºæµï¼Œå°±å¯ä»¥å†™åˆ°ç›¸åº”çš„æ–‡ä»¶ä¸­ï¼Œæ­¤å¤„ç”¨çš„æ˜¯ç»å¯¹è·¯å¾„
 
             out = new FileWriter(new File(outFilePath + fileName));
             Template temp = getTemplate(templateName);
@@ -82,18 +82,18 @@ public class FreeMakerUtil {
     }
 
     /**
-     * Éú³ÉÎÄ¼ş
+     * ç”Ÿæˆæ–‡ä»¶
      *
-     * @param 'name:Ä£°åÃû
-     * @param root£ºÊı¾İÔ­ĞÍ
-     * @param 'outFile£ºÊä³öÂ·¾¶(È«Â·¾¶Ãû)
+     * @param 'name:æ¨¡æ¿å
+     * @param rootï¼šæ•°æ®åŸå‹
+     * @param 'outFileï¼šè¾“å‡ºè·¯å¾„(å…¨è·¯å¾„å)
      */
     public static void generateFile(String templateName, Map<String, Object> root, String outFilePath) {
 
         FileWriter out = null;
         try {
 
-            // Í¨¹ıÒ»¸öÎÄ¼şÊä³öÁ÷£¬¾Í¿ÉÒÔĞ´µ½ÏàÓ¦µÄÎÄ¼şÖĞ£¬´Ë´¦ÓÃµÄÊÇ¾ø¶ÔÂ·¾¶
+            // é€šè¿‡ä¸€ä¸ªæ–‡ä»¶è¾“å‡ºæµï¼Œå°±å¯ä»¥å†™åˆ°ç›¸åº”çš„æ–‡ä»¶ä¸­ï¼Œæ­¤å¤„ç”¨çš„æ˜¯ç»å¯¹è·¯å¾„
             out = new FileWriter(new File(outFilePath));
             Template temp = getTemplate(templateName);
             temp.process(root, out);
@@ -112,9 +112,9 @@ public class FreeMakerUtil {
     }
 
     /**
-     * ĞÂ½¨Ä¿Â¼.
+     * æ–°å»ºç›®å½•.
      *
-     * @param path ÎÄ¼şÂ·¾¶
+     * @param path æ–‡ä»¶è·¯å¾„
      * @throws Exception
      */
     public static void createDirectory(String path) throws Exception {
@@ -122,10 +122,10 @@ public class FreeMakerUtil {
             return;
         }
         try {
-            // »ñµÃÎÄ¼ş¶ÔÏó
+            // è·å¾—æ–‡ä»¶å¯¹è±¡
             File f = new File(path);
             if (!f.exists()) {
-                // Èç¹ûÂ·¾¶²»´æÔÚ,Ôò´´½¨
+                // å¦‚æœè·¯å¾„ä¸å­˜åœ¨,åˆ™åˆ›å»º
                 f.mkdirs();
             }
         } catch (Exception e) {
@@ -142,7 +142,7 @@ public class FreeMakerUtil {
         try {
             outFilePath = outFilePath.replaceAll("\\.", "\\\\");
             Template template = getTemplate(templateName);
-            //´´½¨Éú³ÉÎÄ¼şÄ¿Â¼
+            //åˆ›å»ºç”Ÿæˆæ–‡ä»¶ç›®å½•
             createDirectory(outFilePath);
 
             File htmlFile = new File(outFilePath + fileName);

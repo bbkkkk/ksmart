@@ -10,7 +10,7 @@
     <module>ksmart-export</module>
     <module>ksmart-web</module>
     <module>ksmart-service</module>
-      <module>ksmart-coder</module>
+    <module>ksmart-coder</module>
   </modules>
   <packaging>pom</packaging>
 
