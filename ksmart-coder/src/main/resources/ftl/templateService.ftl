@@ -1,4 +1,4 @@
-package com.ksmart.pms.service;
+package ${ packageName }.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +9,7 @@ import java.util.Map;
 /**
 * Created by KF on 2017/8/16.
 */
-public interface UserService {
+public interface ${classPre}Service {
 
 int insert(Map<String, Object> params);
 

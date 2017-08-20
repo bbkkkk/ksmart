@@ -86,15 +86,15 @@ public class DBUtil {
         return resultList;
     }
 
-    public static List<FieldBean> queryFiledBeanList(String tableSchema,String tableName) {
+    public static List<FieldBean> queryFiledBeanList(String tableSchema, String tableName) {
 
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql="select COLUMN_NAME,COLUMN_COMMENT,DATA_TYPE from information_schema.columns\n" +
-                "where table_schema = '"+tableSchema+"' \n" +
-                "and table_name = '"+tableName+"' " ;
+        String sql = "select COLUMN_NAME,COLUMN_COMMENT,DATA_TYPE from information_schema.columns\n" +
+                "where table_schema = '" + tableSchema + "' \n" +
+                "and table_name = '" + tableName + "' ";
         List<FieldBean> resultList = new ArrayList<FieldBean>();
         try {
             conn = getConnection();
@@ -107,9 +107,9 @@ public class DBUtil {
             String comment;
             String dataType;
             String arr[];
+            FieldBean fieldBean;
             while (rs.next()) {
-                FieldBean fieldBean = new FieldBean();
-
+                fieldBean = new FieldBean();
                 cname = rs.getObject(1).toString();
                 comment = rs.getObject(2).toString();
                 dataType = rs.getObject(3).toString();
@@ -129,40 +129,40 @@ public class DBUtil {
                         if ("EU".equals(arr[1])) {
                             fieldBean.setInputType("text");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(true);
-                            fieldBean.setShowList(false);
+                            fieldBean.setIsEdit(1);
+                            fieldBean.setShowList(0);
                         } else if ("UU".equals(arr[1])) {
                             fieldBean.setInputType("text");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(false);
-                            fieldBean.setShowList(false);
+                            fieldBean.setIsEdit(0);
+                            fieldBean.setShowList(0);
                         } else if ("UL".equals(arr[1])) {
                             fieldBean.setInputType("text");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(false);
-                            fieldBean.setShowList(true);
+                            fieldBean.setIsEdit(0);
+                            fieldBean.setShowList(1);
                         } else if ("ML".equals(arr[1]) && arr.length > 2) {
                             fieldBean.setInputType("select");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(true);
-                            fieldBean.setShowList(true);
+                            fieldBean.setIsEdit(1);
+                            fieldBean.setShowList(1);
                             fieldBean.setEnums(getEnum(arr[2]));
                         } else if ("MU".equals(arr[1]) && arr.length > 2) {
                             fieldBean.setInputType("select");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(true);
-                            fieldBean.setShowList(false);
+                            fieldBean.setIsEdit(1);
+                            fieldBean.setShowList(0);
                             fieldBean.setEnums(getEnum(arr[2]));
                         } else if ("TU".equals(arr[1])) {
                             fieldBean.setInputType("textarea");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setEdit(false);
-                            fieldBean.setShowList(false);
+                            fieldBean.setIsEdit(0);
+                            fieldBean.setShowList(0);
                         } else {
                             fieldBean.setInputType("text");
                             fieldBean.setTextName(comment);
-                            fieldBean.setShowList(true);
-                            fieldBean.setEdit(true);
+                            fieldBean.setShowList(1);
+                            fieldBean.setIsEdit(1);
                             System.err.println("字段备注不符合规则");
                         }
                     } else {
@@ -171,8 +171,8 @@ public class DBUtil {
                 } else {//默认类型
                     fieldBean.setInputType("text");
                     fieldBean.setTextName(comment);
-                    fieldBean.setShowList(true);
-                    fieldBean.setEdit(true);
+                    fieldBean.setShowList(1);
+                    fieldBean.setIsEdit(1);
                 }
                 resultList.add(fieldBean);
             }

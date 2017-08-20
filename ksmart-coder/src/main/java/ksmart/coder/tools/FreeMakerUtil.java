@@ -1,9 +1,6 @@
 package ksmart.coder.tools;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Map;
 
 import freemarker.template.Configuration;
@@ -21,8 +18,10 @@ public class FreeMakerUtil {
     public static Template getTemplate(String name) {
         try {
             Configuration cfg = new Configuration();
+            cfg.setDefaultEncoding("UTF-8");
             cfg.setClassForTemplateLoading(FreeMakerUtil.class.getClass(), "/ftl");
             Template template = cfg.getTemplate(name);
+            template.setEncoding("UTF-8");
             return template;
         } catch (IOException e) {
             e.printStackTrace();
@@ -56,18 +55,21 @@ public class FreeMakerUtil {
      * @param root：数据原型
      * @param 'outFile：输出路径(全路径名)
      */
-    public static void generateFile(String templateName, Map<String, Object> root, String outFilePath) {
-        outFilePath=outFilePath.replaceAll("\\.",File.separator);
+    public static void generateFile(String templateName, Map<String, Object> root, String outFilePath, String fileName) {
+        outFilePath = outFilePath.replaceAll("\\.", "\\\\");
         FileWriter out = null;
         try {
-
+            createDirectory(outFilePath);
             // 通过一个文件输出流，就可以写到相应的文件中，此处用的是绝对路径
-            out = new FileWriter(new File(outFilePath));
+
+            out = new FileWriter(new File(outFilePath + fileName));
             Template temp = getTemplate(templateName);
             temp.process(root, out);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TemplateException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
@@ -86,7 +88,7 @@ public class FreeMakerUtil {
      * @param root：数据原型
      * @param 'outFile：输出路径(全路径名)
      */
-    public static void generateFile(String templateName, Map<String, Object> root,String packageName, String outFilePath) {
+    public static void generateFile(String templateName, Map<String, Object> root, String outFilePath) {
 
         FileWriter out = null;
         try {
@@ -108,6 +110,7 @@ public class FreeMakerUtil {
             }
         }
     }
+
     /**
      * 新建目录.
      *
@@ -126,8 +129,37 @@ public class FreeMakerUtil {
                 f.mkdirs();
             }
         } catch (Exception e) {
-           System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * public static void generateFile(String templateName, Map<String, Object> root, String outFilePath,String fileName) {
+     * outFilePath=outFilePath.replaceAll("\\.","\\\\");
+     */
+    public static boolean buildHtml(String templateName, Map root, String outFilePath, String fileName) {
+        try {
+            outFilePath = outFilePath.replaceAll("\\.", "\\\\");
+            Template template = getTemplate(templateName);
+            //创建生成文件目录
+            createDirectory(outFilePath);
+
+            File htmlFile = new File(outFilePath + fileName);
+//            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFile), "UTF-8"));
+            Writer out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFile),"UTF-8"));
+            template.process(root, out);
+            out.flush();
+            return true;
+        } catch (TemplateException ex) {
+            ex.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

@@ -14,8 +14,8 @@ public class FieldBean {
     private String textName;//中文名称
     private String proType;   //变量类型
     private String inputType;
-    private boolean showList;
-    private boolean isEdit;
+    private int showList;
+    private int isEdit;
     private List<EnumKV> enums;//只有枚举类型有
 
     public String getTextName() {
@@ -34,20 +34,20 @@ public class FieldBean {
         this.inputType = inputType;
     }
 
-    public boolean isShowList() {
+    public int getShowList() {
         return showList;
     }
 
-    public void setShowList(boolean showList) {
+    public void setShowList(int showList) {
         this.showList = showList;
     }
 
-    public boolean isEdit() {
+    public int getIsEdit() {
         return isEdit;
     }
 
-    public void setEdit(boolean edit) {
-        isEdit = edit;
+    public void setIsEdit(int isEdit) {
+        this.isEdit = isEdit;
     }
 
     public List<EnumKV> getEnums() {

@@ -1,10 +1,9 @@
-package com.ksmart.pms.ctl;
+package ${ packageName }.ctl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ksmart.base.ctl.BaseCtl;
 import com.ksmart.base.utils.StringUtils;
-import com.ksmart.demo.service.DemoService;
-import com.ksmart.pms.service.UserService;
+import com.ksmart.pms.service.${classPre}Service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,12 @@ import java.util.Map;
 * Created by KF on 2017/8/16.
 */
 @Controller
-@RequestMapping(value = "/pms/user")
-public class UserCtl extends BaseCtl {
-private static final Log log = LogFactory.getLog(UserCtl.class);
+@RequestMapping(value = "/${moudelName}/${objectName}")
+public class ${classPre}Ctl extends BaseCtl {
+private static final Log log = LogFactory.getLog(${classPre}Ctl.class);
 
 @Autowired
-UserService userService;
+${classPre}Service ${classPreLow}Service;
 
 @RequestMapping(value = "/add")
 @ResponseBody
@@ -37,7 +36,7 @@ log.info("入参："+params);
 JSONObject json = new JSONObject();
 json.put("statusCode", 200);
 
-int cnt = userService.insert(params);
+int cnt = ${classPreLow}Service.insert(params);
 json.put("cnt", cnt);
 log.info("出参："+json.toString());
 return json;
@@ -50,7 +49,7 @@ Map<String,Object> params=req2Map(request);
 log.info("入参："+params);
 JSONObject json = new JSONObject();
 json.put("statusCode", 200);
-int cnt = userService.update(params);
+int cnt = ${classPreLow}Service.update(params);
 json.put("cnt", cnt);
 log.info("出参："+json.toString());
 return json;
@@ -60,7 +59,7 @@ return json;
 public Map<String, Object> show(HttpServletRequest request) {
 String id = request.getParameter("id");
 log.info("id ：" + id);
-List<Map<String, Object>> list = userService.queryListById(Long.parseLong(id));
+List<Map<String, Object>> list = ${classPreLow}Service.queryListById(Long.parseLong(id));
 Map<String, Object> result = list.get(0);
 result.put("statusCode", 200);
 log.info("出参："+result);
@@ -84,7 +83,7 @@ public Map<String, Object> lgdel(HttpServletRequest request) {
 Map<String,Object> params=req2Map(request);
 log.error("系统关键操作日志：" + params.get("SE_UID") + "调用了smt_user delete id=" + params.get("id"));
 Map<String, Object> result = new HashMap<String, Object>();
-userService.lgDelById(params);
+${classPreLow}Service.lgDelById(params);
 result.put("statusCode", 200);
 result.put("message", "系统编码ok");
 return result;
@@ -110,7 +109,7 @@ if (StringUtils.isNotBlank(search_text)) {
 params = new HashMap<String, Object>();
 params.put("uname", search_text);
 }
-JSONObject json = userService.page(page, rows, params, sortname, sortorder);
+JSONObject json = ${classPreLow}Service.page(page, rows, params, sortname, sortorder);
 
 return json;
 }

@@ -1,4 +1,4 @@
-package com.ksmart.pms.dao;
+package ${ packageName }.dao;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -10,7 +10,7 @@ import java.util.Map;
 * Created by KF on 2017/8/17.
 */
 @Repository
-public interface UserDao {
+public interface ${classPre}Dao {
 public int insert(Map<String, Object> params);
 
 public int update(Map<String, Object> params);

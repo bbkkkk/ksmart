@@ -1,4 +1,4 @@
-<title>系统用户管理</title>
+﻿<title>${tableTextName}管理</title>
 
 <link rel="stylesheet" href="../../assets/css/jquery-ui.css"/>
 <link rel="stylesheet" href="../../assets/css/datepicker.css"/>
@@ -20,13 +20,13 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="input-group">
-                    <span class="input-group-addon">用户名</span>
+                    <span class="input-group-addon">查询条件1</span>
                     <input type="text" class="form-control form-cnd" style="height: 32px;width: 150px;"
-                           placeholder="用户名"
+                           placeholder="查询条件1"
                            id="search_text">
-                    <span class="input-group-addon">身份证号</span>
+                    <span class="input-group-addon">查询条件2</span>
                     <input type="text" class="form-control form-cnd" style="height: 32px;width: 240px;"
-                           placeholder="身份证号"
+                           placeholder="查询条件2"
                            id="search_text2">
                     <span class="input-group-btn">
 						<button class="btn btn-primary btn-search" style="height: 32px" type="button" id="btn_search">
