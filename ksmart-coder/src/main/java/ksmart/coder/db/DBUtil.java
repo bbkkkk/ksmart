@@ -3,23 +3,47 @@ package ksmart.coder.db;
 import ksmart.coder.model.EnumKV;
 import ksmart.coder.model.FieldBean;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DBUtil {
+    //    private static String className = "com.mysql.jdbc.Driver";
+//    private static String url = "jdbc:mysql://localhost:3306/ksmart";
+//    private static String user = "root";
+//    private static String password = "root";
     private static String className = "com.mysql.jdbc.Driver";
-    private static String url = "jdbc:mysql://localhost:3306/ksmart";
-    private static String user = "root";
-    private static String password = "root";
+//    private static String url;
+//    private static String user;
+//    private static String password;
+
+//    static {
+//        Properties prop = new Properties();
+//        try {
+//            InputStream in = new BufferedInputStream(new FileInputStream("db.properties"));
+//            prop.load(in);     ///加载属性列表
+////            Iterator<String> it=prop.stringPropertyNames().iterator();
+////            while(it.hasNext()){
+////                     String key=it.next();
+////                     System.out.println(key+":"+prop.getProperty(key));
+////                 }
+//            Config.url = prop.getProperty("jdbc.url");
+//            Config.user = prop.getProperty("jdbc.username");
+//            Config. password = prop.getProperty("jdbc.password");
+//            in.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public static Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName(className);
-            conn = DriverManager.getConnection(url, user, password);
+            conn = DriverManager.getConnection(Config.url, Config.user, Config.password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -37,6 +61,24 @@ public class DBUtil {
             e.printStackTrace();
         }
 
+    }
+
+    public static void closeALL(Connection conn, Statement st, ResultSet rs, PreparedStatement pst) {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (pst != null)
+                pst.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<Map<String, Object>> queryAll(String sql, Map<Integer, Object> conditionMap) {
@@ -209,49 +251,6 @@ public class DBUtil {
         test3();
     }
 
-    /**
-     * 根据表名获取所有的列信息
-     *
-     * @param tableName
-     * @return
-     */
-    public static List<FieldBean> getAllColums(String tableName) {
-
-        ArrayList<FieldBean> returnList = new ArrayList<FieldBean>();
-        DbConn dbConn = new DbConn();
-        Connection conn = getConnection();
-        Statement st = null;
-        ResultSet rs = null;
-        PreparedStatement pst = null;
-        String sqlstr = null;
-        try {
-
-            conn = dbConn.getConnection();
-            sqlstr = "select * from " + tableName;
-            st = conn.createStatement();
-            rs = st.executeQuery(sqlstr);
-            ResultSetMetaData resultSetMetaData = rs.getMetaData();
-
-            for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-                String columName = resultSetMetaData.getColumnName(i);
-                String proName = convertField(columName);
-                String dataType = getTypeName(resultSetMetaData.getColumnType(i));
-                FieldBean fieldBean = new FieldBean();
-                fieldBean.setFieldName(columName.toLowerCase());
-                fieldBean.setProName(proName);
-                fieldBean.setProType(dataType);
-
-                returnList.add(fieldBean);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            dbConn.closeALL(conn, st, rs, pst);
-        }
-        return returnList;
-
-    }
 
     /**
      * 根据表名获取所有的列信息
@@ -262,7 +261,6 @@ public class DBUtil {
     public static List<Map<String, Object>> getAllColumsMapL(String tableName) {
 
         ArrayList<Map<String, Object>> returnList = new ArrayList<Map<String, Object>>();
-        DbConn dbConn = new DbConn();
         Connection conn = getConnection();
         Statement st = null;
         ResultSet rs = null;
@@ -290,7 +288,7 @@ public class DBUtil {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            dbConn.closeALL(conn, st, rs, pst);
+            closeALL(conn, st, rs, pst);
         }
         return returnList;
 

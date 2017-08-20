@@ -13,15 +13,16 @@ import java.util.Map;
  */
 public class App2 {
     public static void main(String[] args) {
+        String sevicePath = "E:\\test\\service";//service 模块的绝对路径
+        String webPath = "E:\\test\\web";//web 模块的绝对路径
         String tableSchema = "ksmart";
         String tableName = "smt_template";
         String tableTextName = "模板";
         String moudelName = "demo";
-        String packageName = "com.ksmart."+moudelName;
         String classPre = "Template";
+
+        String packageName = "com.ksmart."+moudelName;
         String objectName = classPre.toLowerCase();
-        String sevicePath = "E:\\test\\service";//service 模块的绝对路径
-        String webPath = "E:\\test\\web";//web 模块的绝对路径
         List<FieldBean> columns = DBUtil.queryFiledBeanList(tableSchema, tableName);
         Map<String, Object> templateData = new HashMap<String, Object>();
         templateData.put("tableName", tableName);
