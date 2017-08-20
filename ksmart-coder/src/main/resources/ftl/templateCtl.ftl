@@ -3,7 +3,7 @@ package ${ packageName }.ctl;
 import com.alibaba.fastjson.JSONObject;
 import com.ksmart.base.ctl.BaseCtl;
 import com.ksmart.base.utils.StringUtils;
-import com.ksmart.pms.service.${classPre}Service;
+import com.ksmart.${moudelName}.service.${classPre}Service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

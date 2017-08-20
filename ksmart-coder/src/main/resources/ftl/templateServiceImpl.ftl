@@ -4,8 +4,8 @@ package ${ packageName }.service.impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ksmart.base.utils.StringUtils;
-import com.ksmart.pms.dao.${classPre}Dao;
-import com.ksmart.pms.service.${classPre}Service;
+import com.ksmart.${moudelName}.dao.${classPre}Dao;
+import com.ksmart.${moudelName}.service.${classPre}Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,28 +25,28 @@ private static final Logger log = LoggerFactory.getLogger(${classPre}ServiceImpl
 ${classPre}Dao ${classPreLow}Dao;
 @Override
 public int insert(Map<String, Object> params) {
-return ${classPre}Dao.insert(params);
+return ${classPreLow}Dao.insert(params);
 
 }
 
 @Override
 public int update(Map<String, Object> params){
-return ${classPre}Dao.update(params);
+return ${classPreLow}Dao.update(params);
 }
 
 @Override
 public List<Map<String, Object>> queryListById(long id) {
-return ${classPre}Dao.queryListById(id);
+return ${classPreLow}Dao.queryListById(id);
 }
 
 @Override
 public int delById(long id) {
-return ${classPre}Dao.delById(id);
+return ${classPreLow}Dao.delById(id);
 }
 
 @Override
 public int lgDelById(Map<String, Object> params) {
-return ${classPre}Dao.lgDelById( params);
+return ${classPreLow}Dao.lgDelById( params);
 }
 
 @Override
@@ -55,7 +55,7 @@ log.info("分页查询条件：page,rows,search_text,sortname,sortorder");
 log.info("分页查询参数：" +params);
 JSONObject json = new JSONObject();
 // 取得每页显示行数，,注意这是jqgrid自身的参数
-int total_record = ${classPre}Dao.queryCount(params); // 总记录数(应根据数据库取得，在此只是模拟)
+int total_record = ${classPreLow}Dao.queryCount(params); // 总记录数(应根据数据库取得，在此只是模拟)
 int page_size = Integer.parseInt(rows);
 int current_page = Integer.parseInt(page);
 int total_page = total_record % page_size == 0 ? total_record / page_size : total_record / page_size + 1; // 计算总页数
@@ -71,7 +71,7 @@ sortname="id";
 if (!StringUtils.isNotEmpty(sortorder.trim())) {
 sortorder="desc";
 }
-List<Map<String, Object>> list = ${classPre}Dao.queryPage(limit_start, limit_end,params, sortname, sortorder);
+List<Map<String, Object>> list = ${classPreLow}Dao.queryPage(limit_start, limit_end,params, sortname, sortorder);
 for (int i = 0; i < list.size(); i++) {
 rows_jsonarr.add(list.get(i));
 }
