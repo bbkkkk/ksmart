@@ -35,22 +35,22 @@ public class App2 {
         templateData.put("objectName", objectName);
 
         String ctlfilePath= webPath + "." + packageName +".ctl"+ ".";
-//        FreeMakerUtil.generateFile("templateCtl.ftl", templateData,ctlfilePath,   classPre +"Ctl.java");
-//
-//        String daofilePath= sevicePath + "." + packageName +".dao"+ ".";
-//        FreeMakerUtil.generateFile("templateDao.ftl", templateData,ctlfilePath,   classPre +"Dao.java");
-//
-//        String servicefilePath= sevicePath + "." + packageName +".service"+ ".";
-//        FreeMakerUtil.generateFile("templateService.ftl", templateData,ctlfilePath,   classPre +"Service.java");
-//
-//        String serviceImplfilePath= sevicePath + "." + packageName +".service"+ ".impl.";
-//        FreeMakerUtil.generateFile("templateServiceImpl.ftl", templateData,ctlfilePath,   classPre +"ServiceImpl.java");
-//
-//        String mybatisfilePath= sevicePath + "." + packageName +".mybatis"+ ".";
-//        FreeMakerUtil.generateFile("templateMybatis.ftl", templateData,ctlfilePath,   classPre +"Dao.xml");
+        FreeMakerUtil.generateFile("templateCtl.ftl", templateData,ctlfilePath,   classPre +"Ctl.java");
 
-        String htmlfilePath= sevicePath + ".html.ajax.content.";
-        FreeMakerUtil.buildHtml("templateHtml.ftl", templateData,ctlfilePath,  moudelName+"-"+ objectName +"-list.html");
+        String daofilePath= sevicePath + "." + packageName +".dao"+ ".";
+        FreeMakerUtil.generateFile("templateDao.ftl", templateData,daofilePath,   classPre +"Dao.java");
+
+        String servicefilePath= sevicePath + "." + packageName +".service"+ ".";
+        FreeMakerUtil.generateFile("templateService.ftl", templateData,servicefilePath,   classPre +"Service.java");
+
+        String serviceImplfilePath= sevicePath + "." + packageName +".service"+ ".impl.";
+        FreeMakerUtil.generateFile("templateServiceImpl.ftl", templateData,serviceImplfilePath,   classPre +"ServiceImpl.java");
+
+        String mybatisfilePath= sevicePath + "." + packageName +".mybatis"+ ".";
+        FreeMakerUtil.generateFile("templateMybatis.ftl", templateData,mybatisfilePath,   classPre +"Dao.xml");
+
+        String htmlfilePath= webPath + ".html.ajax.content.";
+        FreeMakerUtil.buildHtml("templateHtml.ftl", templateData,htmlfilePath,  moudelName+"-"+ objectName +"-list.html");
 
 
     }

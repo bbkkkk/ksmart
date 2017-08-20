@@ -64,72 +64,44 @@
                 <form class="form-horizontal" role="form" id="addApplyForm"
                       data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                用户名</label>
+                    <#list columns as col>
+                        <#if col.isEdit == 1 && col.inputType=='text'>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">
+                                    ${col.textName}</label>
 
-                            <div class="col-sm-9">
-                                <input type="text" name="uname" placeholder="编码,必填" class="col-xs-10
+                                <div class="col-sm-9">
+                                    <input type="text" name="${col.fieldName}" placeholder="编码,必填" class="col-xs-10
 								col-sm-7" data-rule="required"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                密码</label>
+                        <#elseif col.isEdit == 1 && col.inputType=='select'>
+                            <div class="form-group">
 
-                            <div class="col-sm-9">
-                                <input type="text" name="pwd" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
+                                <label class="col-sm-3 control-label no-padding-right">
+                                ${col.textName}</label>
+                                <div class="col-sm-9" style="width: 130px;">
+                                    <select class="form-control" name="${col.fieldName}" data-rule="required">
+                                        <option value=""></option>
+                                        <#list col.enums as enum>
+                                        <option value="${enum.value}">${enum.text}</option>
+                                   </#list>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                真实名称</label>
+                        <#elseif col.isEdit == 1 && col.inputType=='textarea'>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"> ${col.textName}</label>
 
-                            <div class="col-sm-9">
-                                <input type="text" name="real_name" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <label class="col-sm-3 control-label no-padding-right">
-                                性别</label>
-                            <div class="col-sm-9" style="width: 130px;">
-                                <select class="form-control" name="sex" data-rule="required">
-                                    <option value=""></option>
-                                    <option value="1">男</option>
-                                    <option value="2">女</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                身份证号</label>
-
-                            <div class="col-sm-9">
-                                <input type="text" name="cert_no" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                生日</label>
-
-                            <div class="col-sm-9">
-                                <input type="text" name="birthday" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">备注</label>
-
-                            <div class="col-sm-9">
-                                <textarea class="autosize-transition form-control" name="comment"
+                                <div class="col-sm-9">
+                                <textarea class="autosize-transition form-control" name="${col.fieldName}"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
                                           placeholder="20字内"></textarea>
+                                </div>
                             </div>
-                        </div>
+                        <#else>
+                        </#if>
+                    </#list>
 
 
                     </div>
@@ -149,78 +121,50 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
-                    <h4 class="modal-title">编辑用户</h4>
+                    <h4 class="modal-title">编辑</h4>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="updateAppForm"
                           data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
                         <input name="id" type="hidden" value="">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                用户名</label>
+                    <#list columns as col>
+                        <#if col.isEdit == 1 && col.inputType=='text'>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right">
+                                ${col.textName}</label>
 
-                            <div class="col-sm-9">
-                                <input type="text" name="uname" placeholder="编码,必填" class="col-xs-10
+                                <div class="col-sm-9">
+                                    <input type="text" name="${col.fieldName}" placeholder="编码,必填" class="col-xs-10
 								col-sm-7" data-rule="required"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                密码</label>
+                        <#elseif col.isEdit == 1 && col.inputType=='select'>
+                            <div class="form-group">
 
-                            <div class="col-sm-9">
-                                <input type="text" name="pwd" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
+                                <label class="col-sm-3 control-label no-padding-right">
+                                ${col.textName}</label>
+                                <div class="col-sm-9" style="width: 130px;">
+                                    <select class="form-control" name="${col.fieldName}" data-rule="required">
+                                        <option value=""></option>
+                                        <#list col.enums as enum>
+                                            <option value="${enum.value}">${enum.text}</option>
+                                        </#list>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                真实名称</label>
+                        <#elseif col.isEdit == 1 && col.inputType=='textarea'>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label no-padding-right"> ${col.textName}</label>
 
-                            <div class="col-sm-9">
-                                <input type="text" name="real_name" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-
-                            <label class="col-sm-3 control-label no-padding-right">
-                                性别</label>
-                            <div class="col-sm-9" style="width: 130px;">
-                                <select class="form-control" name="sex" data-rule="required">
-                                    <option value=""></option>
-                                    <option value="1">男</option>
-                                    <option value="2">女</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                身份证号</label>
-
-                            <div class="col-sm-9">
-                                <input type="text" name="cert_no" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">
-                                生日</label>
-
-                            <div class="col-sm-9">
-                                <input type="text" name="birthday" placeholder="名称,必填" class="col-xs-10
-								col-sm-7" data-rule="required"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label no-padding-right">备注</label>
-
-                            <div class="col-sm-9">
-                                <textarea class="autosize-transition form-control" name="comment"
+                                <div class="col-sm-9">
+                                <textarea class="autosize-transition form-control" name="${col.fieldName}"
                                           style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
                                           placeholder="20字内"></textarea>
+                                </div>
                             </div>
-                        </div>
+                        <#else>
+                        </#if>
+                    </#list>
 
                     </form>
                 </div>
@@ -261,7 +205,7 @@
     //    }
     function del(id) {
         confirm("确定删除此记录？", function () {
-            var reqUrl = '../../mvc/pms/user/lgdel';
+            var reqUrl = '../../mvc/${moudelName}/${objectName}/lgdel';
             getRemoteData(reqUrl, {id: id});
             $("#grid-table").jqGrid().trigger("reloadGrid");
         })
@@ -305,13 +249,13 @@
 //                    if (result.statusCode == 300) {
 //                        return;
 //                    }
-                    reqUrl = '../../mvc/pms/user/add';
+                    reqUrl = '../../mvc/${moudelName}/${objectName}/add';
                     postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加信息？", "grid-table");
                 }
             });
 
             $('#updateAppModal').on('shown.bs.modal', function () {
-                var reqUrl = '../../mvc/pms/user/show';
+                var reqUrl = '../../mvc/${moudelName}/${objectName}/show';
                 var result = getRemoteData(reqUrl, {"id": temp_groupid});
                 //  alert(result);
                 var tmpobj;
@@ -326,7 +270,7 @@
             $("#btn-update-app").click(
                     function () {
                         if (isValid("updateAppForm")) {
-                            var reqUrl = '../../mvc/pms/user/update';
+                            var reqUrl = '../../mvc/${moudelName}/${objectName}/update';
                             postFormData(reqUrl, "updateAppForm", "updateAppModal",
                                     "确定保存应用信息？", "grid-table");
                         }
@@ -360,35 +304,34 @@
             jQuery(grid_selector).jqGrid({
                 subGrid: false,
                 datatype: "json", //将这里改为使用JSON数据
-                url: '../../mvc/pms/user/page', //这是数据的请求地址
+                url: '../../mvc/${moudelName}/${objectName}/page', //这是数据的请求地址
                 repeatitems: false,
                 height: $(document).height() - $("#table-div").offset().top - 280,
                 jsonReader: {
                     repeatitems: false
                 },
-                colNames: ['', '用户名', '真实名称', '身份证号', '性别', '创建时间', '修改时间', '操作'],
+                colNames: [
+        <#list columns as col>
+            <#if col.showList == 1>
+                '${col.textName}',
+            <#else>
+            </#if>
+        </#list>
+
+                    '操作'],
                 colModel: [
-                    {name: 'id', index: 'id', width: 30, sorttype: "text", editable: true},
-                    {name: 'uname', index: 'uname', width: 80, sorttype: "text", editable: true},
-                    {name: 'real_name', index: 'real_name', width: 80, sorttype: "text", editable: true},
-                    {name: 'cert_no', index: 'cert_no', width: 80, sorttype: "text", editable: true},
-                    {name: 'sex', index: 'sex', width: 80, sorttype: "text", editable: true, formatter: sex_EnumFunc},
-                    {
-                        name: 'ctime',
-                        index: 'ctime',
-                        width: 80,
-                        sorttype: "text",
-                        editable: true,
-                        formatter: timeFormatter
-                    },
-                    {
-                        name: 'utime',
-                        index: 'utime',
-                        width: 50,
-                        sortable: true,
-                        editable: true,
-                        formatter: timeFormatter
-                    },
+                <#list columns as col>
+                <#if col.showList == 1&& col.inputType=='select'>
+                        {name: '${col.fieldName}', index: '${col.fieldName}', width: 50, sorttype: "text", editable: true, formatter: ${col.fieldName}_EnumFunc},
+                <#elseif col.showList == 1&& col.inputType=='text'>
+                    <#if col.proType=='datetime'>
+                        {name: '${col.fieldName}', index: '${col.fieldName}', width: 60, sorttype: "text", editable: true,formatter: timeFormatter},
+                    <#else>
+                        {name: '${col.fieldName}', index: '${col.fieldName}', width: 80, sorttype: "text", editable: true},
+                    </#if>
+                <#else>
+                </#if>
+                </#list>
                     {name: 'act', index: 'act', width: 50, sortable: false, editable: false}
                 ],
 
@@ -465,18 +408,19 @@
                 }, 0);
             }
 
-            //enable datepicker
-
-            //任务状态格式化
-            function sex_EnumFunc(cellvalue, options, rowObject) {
-                if (cellvalue == 1) {
-                    return "男";
-                } else if (cellvalue == 2) {
-                    return "女";
-                } else {
-                    return "未知";
+        <#list columns as col>
+            <#if col.inputType == 'select'>
+                function ${col.fieldName}_EnumFunc(cellvalue, options, rowObject) {
+                    <#list col.enums as enum>
+                        if (cellvalue == ${enum.value}) {
+                            return "${enum.text}";
+                        }
+                    </#list>
                 }
-            }
+            <#else>
+            </#if>
+        </#list>
+
 
 
             //replace icons with FontAwesome icons like above

@@ -155,7 +155,7 @@ public class DBUtil {
                         } else if ("TU".equals(arr[1])) {
                             fieldBean.setInputType("textarea");
                             fieldBean.setTextName(arr[0]);
-                            fieldBean.setIsEdit(0);
+                            fieldBean.setIsEdit(1);
                             fieldBean.setShowList(0);
                         } else {
                             fieldBean.setInputType("text");
