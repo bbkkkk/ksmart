@@ -1,0 +1,510 @@
+<title>系统用户管理</title>
+
+<link rel="stylesheet" href="../../assets/css/jquery-ui.css"/>
+<link rel="stylesheet" href="../../assets/css/datepicker.css"/>
+<link rel="stylesheet" href="../../assets/css/ui.jqgrid.css"/>
+<link rel="stylesheet" href="../../assets/css/jquery-ui.custom.css"/>
+<link rel="stylesheet" href="../../assets/css/bootstrap-multiselect.css"/>
+
+<style>
+    <!--
+    .autoScroll {
+        overflow: auto;
+    }
+
+    -->
+</style>
+<!-- /.page-header -->
+<div class="page-content">
+    <div class="seach-bar">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <span class="input-group-addon">用户名</span>
+                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 150px;"
+                           placeholder="用户名"
+                           id="search_text">
+                    <span class="input-group-addon">身份证号</span>
+                    <input type="text" class="form-control form-cnd" style="height: 32px;width: 240px;"
+                           placeholder="身份证号"
+                           id="search_text2">
+                    <span class="input-group-btn">
+						<button class="btn btn-primary btn-search" style="height: 32px" type="button" id="btn_search">
+							<i class="icon-search"></i>搜索
+						</button>
+					</span>
+                    <span class="input-group-btn">
+					 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addApplyModal"
+                             style="margin-left: 10px; height: 32px">
+                    <i class="icon-plus"></i>新增
+                    </button>
+					</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12" id="table-div">
+            <table id="grid-table"></table>
+            <div id="grid-pager" style="margin-top: 1px; margin-bottom: 0px"></div>
+        </div>
+    </div>
+    <!-- start -->
+    <div class="modal fade remove-data" id="addApplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title" id="myModalLabel">新增</h5>
+                </div>
+                <form class="form-horizontal" role="form" id="addApplyForm"
+                      data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                用户名</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="uname" placeholder="编码,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                密码</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="pwd" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                真实名称</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="real_name" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-3 control-label no-padding-right">
+                                性别</label>
+                            <div class="col-sm-9" style="width: 130px;">
+                                <select class="form-control" name="sex" data-rule="required">
+                                    <option value=""></option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                身份证号</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="cert_no" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                生日</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="birthday" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">备注</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="autosize-transition form-control" name="comment"
+                                          style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
+                                          placeholder="20字内"></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="btn-add-apply">保存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div tabindex="-1" class="modal remove-data" id="updateAppModal" role="dialog" aria-hidden="true"
+         aria-labelledby="myModalLabel" style="display: none;" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" aria-hidden="true" type="button" data-dismiss="modal">×</button>
+                    <h4 class="modal-title">编辑用户</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="updateAppForm"
+                          data-validator-option="{theme:'yellow_right_effect',stopOnError:true}">
+                        <input name="id" type="hidden" value="">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                用户名</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="uname" placeholder="编码,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                密码</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="pwd" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                真实名称</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="real_name" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-3 control-label no-padding-right">
+                                性别</label>
+                            <div class="col-sm-9" style="width: 130px;">
+                                <select class="form-control" name="sex" data-rule="required">
+                                    <option value=""></option>
+                                    <option value="1">男</option>
+                                    <option value="2">女</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                身份证号</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="cert_no" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">
+                                生日</label>
+
+                            <div class="col-sm-9">
+                                <input type="text" name="birthday" placeholder="名称,必填" class="col-xs-10
+								col-sm-7" data-rule="required"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">备注</label>
+
+                            <div class="col-sm-9">
+                                <textarea class="autosize-transition form-control" name="comment"
+                                          style="height: 100px; overflow: hidden; overflow-y: hidden; word-wrap: break-word;"
+                                          placeholder="20字内"></textarea>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" type="button" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-primary" id="btn-update-app" type="button">保存</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+
+
+    </div>
+    <!-- end -->
+
+</div>
+<!-- /.row -->
+<!-- page specific plugin scripts -->
+<script type="text/javascript">
+    var temp_groupid;
+    var scripts = [null, "../../assets/js/date-time/bootstrap-datepicker.js", "../../assets/js/jqGrid/jquery.jqGrid.src.js", "../../assets/js/jqGrid/i18n/grid.locale-cn.js", "../../assets/js/bootstrap-multiselect.js", null];
+
+    function edit(id) {
+        temp_groupid = id;
+        //$("#updateAppForm [name='sysname']").val('');
+        $('#updateAppModal').modal('show');
+    }
+
+    //    function startwarn(id) {
+    //        var reqUrl = '../../mvc/erp/group/startstop';
+    //        getRemoteData(reqUrl, {id: id, status: 30});
+    //        $("#grid-table").jqGrid().trigger("reloadGrid");
+    //    }
+    //    function stopwarn(id) {
+    //        var reqUrl = '../../mvc/erp/group/startstop';
+    //        getRemoteData(reqUrl, {id: id, status: 40});
+    //        $("#grid-table").jqGrid().trigger("reloadGrid");
+    //    }
+    function del(id) {
+        confirm("确定删除此记录？", function () {
+            var reqUrl = '../../mvc/pms/user/lgdel';
+            getRemoteData(reqUrl, {id: id});
+            $("#grid-table").jqGrid().trigger("reloadGrid");
+        })
+    }
+    //    /**
+    //     * 按条件查询
+    //     * @param cnd 条件
+    //     * @param table   表格
+    //     */
+    //    function findByCnd(cnd, table) {
+    //        var grid = $(table);
+    //        var postData = grid.jqGrid("getGridParam", "postData");
+    //        $.extend(postData, cnd);
+    //        grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
+    //            {page: 1}
+    //        ]);
+    //    }
+    /**************************************************************************************************************************************************************/
+
+    $('.page-content-area').ace_ajax('loadScripts', scripts, function () {
+        //inline scripts related to this page
+
+        jQuery(function ($) {
+
+            $.jgrid.ajaxOptions.type = 'post';
+            $('#addApplyModal').on('shown.bs.modal', function () {
+                $("#addApplyForm")[0].reset();
+//动态下来选项示例
+//                $("#addApplyForm [name='sex']").append('<option value="3">未知</option>');
+//                $("#addApplyForm [name='sex']").val(3);
+            });
+            $("#btn-add-apply").click(function () {
+                if (isValid("addApplyForm")) {
+                    //此处可加校验
+//                    var reqUrl = '../../mvc/erp/group/checkmsgtype';
+//
+//                    var msg_type = $("#addApplyForm [name='msg_type']").val();
+//                    var sysid = $("#addApplyForm [name='sysid']").val();
+//                    var result = getRemoteData(reqUrl, {"msg_type": msg_type, "sysid": sysid});
+//
+//                    if (result.statusCode == 300) {
+//                        return;
+//                    }
+                    reqUrl = '../../mvc/pms/user/add';
+                    postFormData(reqUrl, "addApplyForm", "addApplyModal", "确定添加信息？", "grid-table");
+                }
+            });
+
+            $('#updateAppModal').on('shown.bs.modal', function () {
+                var reqUrl = '../../mvc/pms/user/show';
+                var result = getRemoteData(reqUrl, {"id": temp_groupid});
+                //  alert(result);
+                var tmpobj;
+                for (var key in result) {
+                    tmpobj = $("#updateAppForm [name='" + key + "']");
+                    if (tmpobj) {
+                        tmpobj.val(result[key]);
+                    }
+                }
+            });
+
+            $("#btn-update-app").click(
+                    function () {
+                        if (isValid("updateAppForm")) {
+                            var reqUrl = '../../mvc/pms/user/update';
+                            postFormData(reqUrl, "updateAppForm", "updateAppModal",
+                                    "确定保存应用信息？", "grid-table");
+                        }
+                    });
+            //搜索事件
+            $("#btn_search").click(function () {
+                var grid = $(grid_selector);
+                grid.jqGrid("setGridParam", {search: true}).trigger("reloadGrid", [
+                    {page: 1}
+                ]);
+            });
+
+
+            var grid_selector = "#grid-table";
+            var pager_selector = "#grid-pager";
+
+            //resize to fit page size
+            $(window).on('resize.jqGrid', function () {
+                $(grid_selector).jqGrid('setGridWidth', $(".page-content").width() - 5);
+            })
+            //resize on sidebar collapse/expand
+            var parent_column = $(grid_selector).closest('[class*="col-"]');
+            $(document).on('settings.ace.jqGrid', function (ev, event_name, collapsed) {
+                if (event_name === 'sidebar_collapsed' || event_name === 'main_container_fixed') {
+                    //setTimeout is for webkit only to give time for DOM changes and then redraw!!!
+                    setTimeout(function () {
+                        $(grid_selector).jqGrid('setGridWidth', parent_column.width());
+                    }, 0);
+                }
+            })
+            jQuery(grid_selector).jqGrid({
+                subGrid: false,
+                datatype: "json", //将这里改为使用JSON数据
+                url: '../../mvc/pms/user/page', //这是数据的请求地址
+                repeatitems: false,
+                height: $(document).height() - $("#table-div").offset().top - 280,
+                jsonReader: {
+                    repeatitems: false
+                },
+                colNames: ['', '用户名', '真实名称', '身份证号', '性别', '创建时间', '修改时间', '操作'],
+                colModel: [
+                    {name: 'id', index: 'id', width: 30, sorttype: "text", editable: true},
+                    {name: 'uname', index: 'uname', width: 80, sorttype: "text", editable: true},
+                    {name: 'real_name', index: 'real_name', width: 80, sorttype: "text", editable: true},
+                    {name: 'cert_no', index: 'cert_no', width: 80, sorttype: "text", editable: true},
+                    {name: 'sex', index: 'sex', width: 80, sorttype: "text", editable: true, formatter: sex_EnumFunc},
+                    {
+                        name: 'ctime',
+                        index: 'ctime',
+                        width: 80,
+                        sorttype: "text",
+                        editable: true,
+                        formatter: timeFormatter
+                    },
+                    {
+                        name: 'utime',
+                        index: 'utime',
+                        width: 50,
+                        sortable: true,
+                        editable: true,
+                        formatter: timeFormatter
+                    },
+                    {name: 'act', index: 'act', width: 50, sortable: false, editable: false}
+                ],
+
+                viewrecords: true,
+                rowTotal: 200,
+                rowNum: 10,
+                rowList: [10, 20, 30],
+                pager: pager_selector,
+                altRows: true,
+                //toppager: true,
+                pagerpos: 'center',
+                multiselect: true,
+                //multikey: "ctrlKey",
+                multiboxonly: true,
+
+                loadComplete: function () {
+                    var table = this;
+                    setTimeout(function () {
+                        updatePagerIcons(table);
+                        enableTooltips(table);
+                    }, 0);
+                    var rows = jQuery(grid_selector).getDataIDs();
+                    for (var i = 0; i < rows.length; i++) {
+                        // code here
+                        var rowId = rows[i];
+                        var id = getRowData(rowId, grid_selector).id;
+                        var edit = "    ";
+                        edit = edit + "<div class='btn-group' style='position:absolute;'>";
+                        edit = edit + "<button type='button' class='btn btn-primary  btn-xs'><i class='fa fa-pencil-square-o xs'></i>操作</button>";
+                        edit = edit + "<button type='button' class='btn btn-primary  btn-xs dropdown-toggle' data-toggle='dropdown' aria-expanded='false'>";
+                        edit = edit + "<span class='caret'></span>";
+                        edit = edit + "<span class='sr-only'>Toggle Dropdown</span>";
+                        edit = edit + "</button>";
+                        edit = edit + "<ul class='dropdown-menu' role='menu' style='line-height: 1px;margin-top: 1px;margin-bottom: 1px;'>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit(" + id + ")\"><i class='fa fa-upload sm'></i> 详细</a></li>";
+                        edit = edit + "<li class='divider'></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"edit(" + id + ")\"><i class='fa fa-upload sm'></i> 修改</a></li>";
+                        edit = edit + "<li ><a href='#' onclick=\"del(" + id + ")\"><i class='fa fa-upload sm'></i> 删除</a></li>";
+                        edit = edit + "</ul>";
+                        edit = edit + "</div>";
+                        jQuery(grid_selector).jqGrid('setRowData', rows[i], {act: edit});
+                    }
+                    ;
+                },
+
+                editurl: "/dummy.html",//nothing is saved
+                caption: "数据列表",
+                beforeRequest: function () {
+                    var jqgrid = $(grid_selector);
+                    var sortname = jqgrid.getGridParam('sortname');
+                    var sortorder = jqgrid.getGridParam('sortorder');
+                    var search_text = $("#search_text").val();
+                    var search_text2 = $("#search_text2").val();
+                    jqgrid.jqGrid("setGridParam", {
+                        postData: {
+                            search_text: search_text,
+                            search_text2: search_text2,
+                            sortname: sortname,
+                            sortorder: sortorder
+                        }
+                    });
+                }
+
+            });
+            $(window).triggerHandler('resize.jqGrid');//trigger window resize to make the grid get the correct size
+
+
+            //switch element when editing inline
+            function aceSwitch(cellvalue, options, cell) {
+                setTimeout(function () {
+                    $(cell).find('input[type=checkbox]')
+                            .addClass('ace ace-switch ace-switch-5')
+                            .after('<span class="lbl"></span>');
+                }, 0);
+            }
+
+            //enable datepicker
+
+            //任务状态格式化
+            function sex_EnumFunc(cellvalue, options, rowObject) {
+                if (cellvalue == 1) {
+                    return "男";
+                } else if (cellvalue == 2) {
+                    return "女";
+                } else {
+                    return "未知";
+                }
+            }
+
+
+            //replace icons with FontAwesome icons like above
+            function updatePagerIcons(table) {
+                var replacement =
+                {
+                    'ui-icon-seek-first': 'ace-icon fa fa-angle-double-left bigger-140',
+                    'ui-icon-seek-prev': 'ace-icon fa fa-angle-left bigger-140',
+                    'ui-icon-seek-next': 'ace-icon fa fa-angle-right bigger-140',
+                    'ui-icon-seek-end': 'ace-icon fa fa-angle-double-right bigger-140'
+                };
+                $('.ui-pg-table:not(.navtable) > tbody > tr > .ui-pg-button > .ui-icon').each(function () {
+                    var icon = $(this);
+                    var $class = $.trim(icon.attr('class').replace('ui-icon', ''));
+
+                    if ($class in replacement) icon.attr('class', 'ui-icon ' + replacement[$class]);
+                })
+            }
+
+            function enableTooltips(table) {
+                $('.navtable .ui-pg-button').tooltip({container: 'body'});
+                $(table).find('.ui-pg-div').tooltip({container: 'body'});
+            }
+
+            $(document).one('ajaxloadstart.page', function (e) {
+                $(grid_selector).jqGrid('GridUnload');
+                $('.ui-jqdialog').remove();
+            });
+        });
+    });
+</script>
