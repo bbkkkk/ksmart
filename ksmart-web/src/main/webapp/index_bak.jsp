@@ -1,6 +1,6 @@
 hello.jsp
 <script type="text/javascript">
 
-window.location.href = 'html/ajax';
+window.location.href = 'login.html';
 		
 </script>

@@ -171,7 +171,7 @@
 <!-- 						</a> <b class="arrow"></b></li> -->
 						<li id="pms-user" class=""><a  href="#page/pms-user-list"> <i class="menu-icon fa fa-caret-right"></i> 系统用户管理
 						</a> <b class="arrow"></b></li>
-						<li id="sys-regedit" class=""><a  href="#page/erp-system-list"> <i class="menu-icon fa fa-caret-right"></i> 系统注册
+						<li id="sys-regedit" class=""><a  href="#page/login"> <i class="menu-icon fa fa-caret-right"></i> 登录
 						</a> <b class="arrow"></b></li>
 						<li class=""><a  href="#page/erp-group-list"> <i class="menu-icon fa fa-caret-right"></i> 分组订阅
 						</a> <b class="arrow"></b></li>
@@ -412,32 +412,34 @@
 	<script src="../../res/js/jmq.validator.lang.cn.js"></script>
 	<script src="../../res/js/json2.js"></script>
 	<script type="text/javascript">
-//$('#logoutid').on('click', function() {
-//	  var reqUrl = '../../mvc/erp/system/logout';
-//	  var result=getRemoteData(reqUrl,{});
-//
-//      if(result.statusCode==200){
-//    	  window.location.href ="../../index.jsp";
-//      }
-//});
-var erp_pin="nologin";
+$('#logoutid').on('click', function() {
+	  var reqUrl = '../../mvc/logout';
+	  var result=getRemoteData(reqUrl,{});
+      if(result.statusCode==200){
+    	  window.location.href ="../../index.html";
+      }
+});
+var SE_UNAME="nologin";
+var SE_UID="nologin";
 var is_admin=0;
 var admin_url="";
 var approve_url="";
-//	  var reqUrl = '../../mvc/erp/system/getuser';
-//	  var result=getRemoteData(reqUrl,{});
-//	  if(result.statusCode==300){
-//    	  window.location.href ="../../index.jsp";
-//      }else{
-//    	  erp_pin=result.erp_pin;
-    	  $("#login_erp").text("hello");
-//    	  is_admin=result.is_admin;
-//    	  admin_url=result.admin_url;
-//    	  approve_url=result.approve_url;
+	  var reqUrl = '../../mvc/getuser';
+	  var result=getRemoteData(reqUrl,{});
+	  if(result.statusCode==300){
+    	  window.location.href ="../../index.html";
+      }else {
+		  SE_UNAME = result.SE_UNAME;
+		  SE_UID= result.SE_UID;
+		  $("#login_erp").text(SE_UNAME);
+//		  is_admin = result.is_admin;
+//		  admin_url = result.admin_url;
+//		  approve_url = result.approve_url;
 //
-//    if(is_admin==1){
-//    	$('#sys-regedit').before('<li class=""><a  href="#page/'+admin_url+'"> <i class="menu-icon fa fa-caret-right"></i> 系统审批</a> <b class="arrow"></b></li>');
-//    }
+//		  if (is_admin == 1) {
+//			  $('#sys-regedit').before('<li class=""><a  href="#page/' + admin_url + '"> <i class="menu-icon fa fa-caret-right"></i> 系统审批</a> <b class="arrow"></b></li>');
+//		  }
+	  }
     	  
 
 </script>
