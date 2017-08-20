@@ -24,6 +24,8 @@ public  class BaseCtl {
                 }
             }
         }
+        map.put("SE_UNAME",request.getSession().getAttribute("SE_UNAME"));
+        map.put("SE_UID",request.getSession().getAttribute("SE_UID"));
         return map;
     }
 }

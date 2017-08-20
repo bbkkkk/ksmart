@@ -19,7 +19,7 @@ public interface UserService {
 
     public int delById(long id);
 
-    public int lgDelById(long id);
+    public int lgDelById(Map<String, Object> params);
 
     JSONObject page(String page, String rows, Map<String, Object> params, String sortname, String sortorder);
 }

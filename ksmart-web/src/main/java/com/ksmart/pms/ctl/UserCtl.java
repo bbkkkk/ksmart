@@ -36,6 +36,7 @@ public class UserCtl extends BaseCtl {
         log.info("入参："+params);
         JSONObject json = new JSONObject();
         json.put("statusCode", 200);
+
         int cnt = userService.insert(params);
         json.put("cnt", cnt);
         log.info("出参："+json.toString());
@@ -80,10 +81,10 @@ public class UserCtl extends BaseCtl {
     @RequestMapping(value = "/lgdel")
     @ResponseBody
     public Map<String, Object> lgdel(HttpServletRequest request) {
-        String id = request.getParameter("id");
-        log.error("系统关键操作日志：" + request.getSession().getAttribute("userid") + "调用了smt_user delete id=" + id);
+        Map<String,Object> params=req2Map(request);
+        log.error("系统关键操作日志：" + params.get("SE_UID") + "调用了smt_user delete id=" + params.get("id"));
         Map<String, Object> result = new HashMap<String, Object>();
-        userService.lgDelById(Long.parseLong(id));
+        userService.lgDelById(params);
         result.put("statusCode", 200);
         result.put("message", "系统编码ok");
         return result;

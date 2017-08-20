@@ -45,8 +45,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int lgDelById(long id) {
-        return userDao.lgDelById(id);
+    public int lgDelById(Map<String, Object> params) {
+        return userDao.lgDelById( params);
     }
 
     @Override

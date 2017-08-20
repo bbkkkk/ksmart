@@ -19,7 +19,7 @@ public interface UserDao {
 
     public int delById(@Param(value = "id") long id);
 
-    public int lgDelById(@Param(value = "id") long id);
+    public int lgDelById(Map<String, Object> params);
 
     public int queryCount(@Param(value = "params") Map<String, Object> params);
 
