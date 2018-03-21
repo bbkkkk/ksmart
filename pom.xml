@@ -342,6 +342,11 @@
         <artifactId>commons-lang3</artifactId>
         <version>${commons.lang.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.codehaus.plexus</groupId>
+        <artifactId>plexus-utils</artifactId>
+        <version>1.5.6</version>
+      </dependency>
     </dependencies>
 
   </dependencyManagement>

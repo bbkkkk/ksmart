@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * 登录认证的拦截器
  */
-public class LoginInterceptor implements HandlerInterceptor{
+public class  LoginInterceptor implements HandlerInterceptor{
 	private static final Log log = LogFactory.getLog(LoginInterceptor.class);
 
 	private String AJAX_NOT_LOGIN_MESSAGE = "{\"error\":\"NotLogin\"}";
